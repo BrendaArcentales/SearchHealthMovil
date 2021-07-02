@@ -3,53 +3,18 @@ import "firebase/firestore";
 import "firebase/auth";
 import "firebase/storage";
 import "firebase/database";
-import { toast } from "./toast";
+
 const config = {
-    apiKey: "AIzaSyA9FIpnrHtT823kGjh4IANXBQvGQATADp8",
-    authDomain: "ioniclase.firebaseapp.com",
-    projectId: "ioniclase",
-    storageBucket: "ioniclase.appspot.com",
-    messagingSenderId: "50991347233",
-    appId: "1:50991347233:web:73c1b2ba75db5a857a9560",
-    measurementId: "G-MNYE1W36LS"
+    apiKey: "AIzaSyDocGK8IMu7lwiOfSDzUUyXjb38-tXA0Bg",
+    authDomain: "search-health-ce2ca.firebaseapp.com",
+    databaseURL: "https://search-health-ce2ca-default-rtdb.firebaseio.com",
+    projectId: "search-health-ce2ca",
+    storageBucket: "search-health-ce2ca.appspot.com",
+    messagingSenderId: "29329690868",
+    appId: "1:29329690868:web:96892ea2165b3ac3e6cea1"
 }
 firebase.initializeApp(config)
 
-export async  function loginUser(useremail:string, userpassword:string){
-    try{
-        const res= await firebase.auth().signInWithEmailAndPassword(useremail,userpassword);
-        console.log("datos",res);
-        return true;
-    }catch (error){
-        console.log("errores",error);
-        return false;
-    }
-    
-    //authenticate with firebase
-    //if present, show dashboard
-    // if not, show erro
-}
-export async function registerUser(useremail:string, userpassword:string) {
-    try {
-        const res = await firebase.auth().createUserWithEmailAndPassword(useremail,userpassword)
-        console.log("datos usuario",res);
-        return true;
-    }catch (error){
-        console.log("errores",error);
-        toast(error.message,"danger")
-        return false;
-    }
-    
-}
-export async function recoverUser(useremail:string) {
-    try {
-        const res = await firebase.auth().sendPasswordResetEmail(useremail)
-        console.log("datos usuario",res);
-        return true;
-    }catch (error){
-        console.log("errores",error);
-        toast(error.message,"danger")
-        return false;
-    }
-    
-}
+export const db = firebase.database();
+export const auth = firebase.auth();
+export const storage = firebase.storage();
