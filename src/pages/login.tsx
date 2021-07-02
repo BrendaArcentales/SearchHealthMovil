@@ -46,7 +46,7 @@ const Login: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <div className="ion-text-center">  
+        <div>  
         <IonCard>
           <IonInput
             placeholder="Email"
