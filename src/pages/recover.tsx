@@ -3,13 +3,14 @@ import {
   IonButton,
   IonContent,
   IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
+  IonCardContent,
   IonInput,
+  IonRippleEffect,
+  IonItem,
+  IonLabel,
 } from "@ionic/react";
 import { IonGrid, IonRow, IonCol } from "@ionic/react";
-import "./Home.css";
+import "./Login.css";
 
 import React, { useState } from "react";
 import { toast } from "../toast";
@@ -36,35 +37,46 @@ const Recover: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Search Health-Recuperar Contraseña</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent>
-        <IonCard>
-          <IonInput
-            placeholder="Email"
-            color="tertiary"
-            type="email"
-            clearInput
-            onIonChange={(e: any) => setUsermail(e.target.value)}
-          />
-          <IonGrid>
-            <IonRow>
-              <IonCol size="6">
-                <IonButton size="small" onClick={recover} color="secondary">
+        <div className="home-container gradient-1">
+          <IonCard class="ion-no-margin" color="gradient">
+            <img src="assets/header.png"></img>
+            <div className="ion-text-center">
+              <img className="logo-size" src="assets/logo.jpeg"></img>
+              <h3>Recuperar contraseña</h3>
+            </div>
+
+            <IonCardContent>
+              <IonItem>
+                <IonLabel position="floating">Email</IonLabel>
+                <IonInput
+                  type="text"
+                  clearInput
+                  onIonChange={(e: any) => setUsermail(e.target.value)}
+                />
+              </IonItem>
+
+              <div className="ion-text-center">
+                <IonButton
+                  color="secondary"
+                  onClick={recover}
+                  className="ion-activatable ripple-parent button"
+                >
                   Enviar
+                  <IonRippleEffect></IonRippleEffect>
                 </IonButton>
-              </IonCol>
-              <IonCol size="6">
-                <IonButton size="small" routerLink="/login" color="light">
+                <IonButton
+                  routerLink="/login"
+                  color="tertiary"
+                  className="ion-activatable ripple-parent button"
+                >
                   Regresar
+                  <IonRippleEffect></IonRippleEffect>
                 </IonButton>
-              </IonCol>
-            </IonRow>
-          </IonGrid>
-        </IonCard>
+              </div>
+            </IonCardContent>
+          </IonCard>
+        </div>
       </IonContent>
     </IonPage>
   );

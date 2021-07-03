@@ -36,6 +36,7 @@ const Home: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
+    
         <IonCard>
           <IonCardHeader>
             <IonCardTitle>Search Health</IonCardTitle>
@@ -62,6 +63,7 @@ const Home: React.FC = () => {
           </IonItem>
         </IonCard>
         <IonButton onClick={onLogout}>Cerrar Sesión</IonButton>
+
       </IonContent>
     </IonPage>
   );

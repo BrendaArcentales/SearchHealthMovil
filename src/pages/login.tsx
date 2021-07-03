@@ -7,9 +7,15 @@ import {
   IonToolbar,
   IonTitle,
   IonInput,
+  IonRippleEffect,
+  IonImg,
+  IonCardSubtitle,
+  IonCardTitle,
+  IonCardContent,
+  IonItem,
+  IonLabel,
 } from "@ionic/react";
-import { IonGrid, IonRow, IonCol } from "@ionic/react";
-import "./Home.css";
+import "./Login.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -40,44 +46,54 @@ const Login: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Search Health-Login</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent>
-        <div className="ion-text-center">  
-        <IonCard>
-          <IonInput
-            placeholder="Email"
-            color="tertiary"
-            type="email"
-            clearInput
-            onIonChange={(e: any) => setUsermail(e.target.value)}
-          />
-          <IonInput
-            placeholder="Contraseña"
-            color="tertiary"
-            type="password"
-            clearInput
-            onIonChange={(e: any) => setUserpassword(e.target.value)}
-          />
-          <IonGrid>
-            <IonRow>
-              <IonCol >
-                <IonButton size="small" onClick={onlogin} color="secondary">
+        <div className="home-container gradient-1">
+          <IonCard class="ion-no-margin" color="gradient">
+            <img src="assets/header.png"></img>
+            <div className="ion-text-center">
+              <img className="logo-size" src="assets/logo.jpeg"></img>
+            </div>
+            <IonCardContent>
+              <IonItem>
+                <IonLabel position="floating">Email</IonLabel>
+                <IonInput
+                  type="text"
+                  clearInput
+                  onIonChange={(e: any) => setUsermail(e.target.value)}
+                />
+              </IonItem>
+              <IonItem>
+                <IonLabel position="floating">Contraseña</IonLabel>
+                <IonInput
+                  type="password"
+                  clearInput
+                  onIonChange={(e: any) => setUserpassword(e.target.value)}
+                />
+              </IonItem>
+
+              <div className="ion-text-center ">
+                <IonButton
+                  color="secondary"
+                  onClick={onlogin}
+                  className="ion-activatable ripple-parent button"
+                >
                   Iniciar Sesión
+                  <IonRippleEffect></IonRippleEffect>
                 </IonButton>
-              </IonCol>
-            </IonRow>
-          </IonGrid>
-          <p>
-            Aún no tienes cuenta? <Link to="/register">Crear cuenta</Link>
-          </p>
-          <p>
-            <Link to="/recover">Olvidaste tu contraseña </Link>
-          </p>
-        </IonCard>
+                <IonTitle size="small">
+                  Aún no tienes cuenta?
+                  <Link className="link" to="/register">
+                    Crear cuenta
+                  </Link>
+                </IonTitle>
+                <IonTitle size="small" color="secondary">
+                  <Link className="link" to="/recover">
+                    Olvidaste tu contraseña
+                  </Link>
+                </IonTitle>
+              </div>
+            </IonCardContent>
+          </IonCard>
         </div>
       </IonContent>
     </IonPage>
