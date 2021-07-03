@@ -46,7 +46,7 @@ const App: React.FC = () => {
   if(showLoading){
     return (
       <IonApp>
-        <IonLoading message="Initializing App" isOpen={showLoading} />
+        <IonLoading message="Cargando Usuario ..." isOpen={showLoading} />
       </IonApp>
     )
   };
@@ -81,7 +81,17 @@ const App: React.FC = () => {
             <Home />
           </Route>
           <Route
-            path="*"
+            path="/login"
+            render={() => <Redirect to="/" />}
+            exact={true}
+          />
+          <Route
+            path="/recover"
+            render={() => <Redirect to="/" />}
+            exact={true}
+          />
+          <Route
+            path="/register"
             render={() => <Redirect to="/" />}
             exact={true}
           />
