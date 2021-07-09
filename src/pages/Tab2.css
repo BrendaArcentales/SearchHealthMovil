@@ -1,41 +1,16 @@
-home-container {
-    position: relative;
-    display: center;
-    flex-direction: column;
-    height: 100%;
-  }
-  
-  ion-header {
-    position: relative !important;
-  }
-  
-  ion-card {
-    --ion-background-color: transparent;
-    box-shadow: none !important;
-  }
-  
-  .logo-size {
-    width: 150px;
-  }
-  
-  .gradient-1 {
-    --background: linear-gradient(
-      180deg,
-      rgba(132, 163, 183, 1) 0%,
-      rgb(74, 217, 236) 100%
-    );
-    background: linear-gradient(180deg, #7bc2ca 0%, #ffffff 100%);
-  }
-  
-  .link {
-      color: #be3917;
-      outline: none;
-      text-decoration: none;
-      padding: 2px 1px 0;
-    }
-  
-  .button {
-    border-radius: 50px;
-    width: 170px;
-    height: 35px;
-  }
+.ios body.dark component-card {
+    --ion-item-background: #1c1c1e;
+}
+
+component-card {
+    --background-darker: var(--ion-color-step-200, #1859bf);
+
+    --text-dark: var(--ion-color-step-850, #27323f);
+    --text-darker: var(--ion-color-step-950, #0e151f);
+
+    --text-light: var(--ion-color-step-650, #5b708b);
+    --text-lighter: var(--ion-color-step-550, #73849a);
+    --text-lightest: var(--ion-color-step-300, #b2becd);
+    background: #2dd36f;
+}
+

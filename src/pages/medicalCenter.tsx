@@ -1,66 +1,92 @@
-import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel, IonButton } from '@ionic/react';
-import { pin, wifi, wine, warning, walk } from 'ionicons/icons';
-import "./Login.css";
-  
-const medicalCenter: React.FC = () => {
+import React, { useEffect, useState } from "react";
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonToolbar,
+  IonCard,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCardTitle,
+  IonCardContent,
+  IonButtons,
+  IonBackButton,
+  IonItem,
+  IonLabel,
+  IonList,
+} from "@ionic/react";
+import "./medicalCenter.css";
+import { RouteComponentProps } from "react-router";
+import firebase from "firebase/app";
+import { medicalCenter } from "../modelo/medicalCenters";
+interface medical
+  extends RouteComponentProps<{
+    id: string;
+  }> {}
 
-    return (
-        <IonPage>
-        <IonHeader>
-          <IonToolbar>
-            <IonTitle>CardExamples</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent>
+const Medical: React.FunctionComponent<medical> = ({ match, history }) => {
+  const [dataCenter, setDataCenter] = useState<any>([]);
+
+  useEffect(() => {
+    const getlistCenter = async () => {
+      let list: medicalCenter[] = [];
+      const res = await firebase
+        .firestore()
+        .collection("medicalCenters")
+        .doc(match.params.id)
+        .get();
+      setDataCenter(res.data());
+    };
+    getlistCenter();
+  }, []);
+
+  console.log("Centro", dataCenter);
+
+  return (
+    <IonPage>
+      <IonHeader translucent={true}>
+      <IonToolbar>
+        <IonButtons slot="start">
+          <IonBackButton defaultHref="/tab1" />
+        </IonButtons>
+      </IonToolbar>
+    </IonHeader>
+      <IonContent >
+                {dataCenter ? (
           <IonCard>
+            <img src={dataCenter.photo} />
             <IonCardHeader>
-              <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-              <IonCardTitle>Card Title</IonCardTitle>
+              <IonCardSubtitle>{dataCenter.sector}</IonCardSubtitle>
+              <IonCardTitle>{dataCenter.name}</IonCardTitle>
+              <IonCardSubtitle>{dataCenter.type}</IonCardSubtitle>
             </IonCardHeader>
             <IonCardContent>
-              Keep close to Nature's heart... and break clear away, once in awhile,
-              and climb a mountain or spend a week in the woods. Wash your spirit clean.
-        </IonCardContent>
+              Horario de Atención:
+              {dataCenter.start_time} - {dataCenter.end_time}
+            </IonCardContent>
+
+            <IonList>
+               {
+                 dataCenter && dataCenter.specialties ?
+                 dataCenter.specialties.map((item: string) => {
+                return (
+                  <IonItem>
+                    <IonLabel>{item}</IonLabel>
+                  </IonItem>
+                );
+              })
+               :
+                     <IonLabel>No hay </IonLabel>
+
+               }
+            </IonList>
           </IonCard>
-  
-          <IonCard>
-            <IonItem>
-              <IonIcon icon={pin} slot="start" />
-              <IonLabel>ion-item in a card, icon left, button right</IonLabel>
-              <IonButton fill="outline" slot="end">View</IonButton>
-            </IonItem>
-  
-            <IonCardContent>
-              This is content, without any paragraph or header tags,
-              within an ion-cardContent element.
-        </IonCardContent>
-          </IonCard>
-  
-          <IonCard>
-            <IonItem href="#" className="ion-activated">
-              <IonIcon icon={wifi} slot="start" />
-              <IonLabel>Card Link Item 1 activated</IonLabel>
-            </IonItem>
-  
-            <IonItem href="#">
-              <IonIcon icon={wine} slot="start" />
-              <IonLabel>Card Link Item 2</IonLabel>
-            </IonItem>
-  
-            <IonItem className="ion-activated">
-              <IonIcon icon={warning} slot="start" />
-              <IonLabel>Card Button Item 1 activated</IonLabel>
-            </IonItem>
-  
-            <IonItem>
-              <IonIcon icon={walk} slot="start" />
-              <IonLabel>Card Button Item 2</IonLabel>
-            </IonItem>
-          </IonCard>
-        </IonContent>
-      </IonPage>
-    );
+        ) : (
+          <IonLabel>No hay datos</IonLabel>
+        )}
+      </IonContent>
+    </IonPage>
+  );
 };
-  
-export default medicalCenter;
+
+export default Medical;

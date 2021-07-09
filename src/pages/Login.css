@@ -18,6 +18,11 @@ ion-card {
   width: 150px;
 }
 
+.img-size {
+  height: 140px;
+  width: 100%;
+}
+
 .gradient-1 {
   --background: linear-gradient(
     180deg,

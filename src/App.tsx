@@ -5,6 +5,7 @@ import { IonReactRouter } from "@ionic/react-router";
 import Home from "./pages/Home";
 import Login from "./pages/login";
 import Register from "./pages/register";
+import Medical from "./pages/medicalCenter";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -26,30 +27,34 @@ import "@ionic/react/css/display.css";
 import "./theme/variables.css";
 import Recover from "./pages/recover";
 import AuthProvider from "./services/auth";
+import MedicalCenter from "./pages/medicalCenter";
+import medicalCenter from "./pages/medicalCenter";
+import Tab1 from "./pages/Tab1";
+import Tab2 from "./pages/Tab2";
 
 const App: React.FC = () => {
   const { authValues, initialize } = React.useContext(AuthProvider);
 
-  //Loading screen 
+  //Loading screen
   const [showLoading, setShowLoading] = React.useState(true);
 
-  React.useEffect(()=>{
-    if(showLoading){
+  React.useEffect(() => {
+    if (showLoading) {
       //do initialize
-      (async()=>{
+      (async () => {
         await initialize();
         setShowLoading(false);
       })();
     }
   }, [initialize, showLoading]);
 
-  if(showLoading){
+  if (showLoading) {
     return (
       <IonApp>
         <IonLoading message="Cargando Usuario ..." isOpen={showLoading} />
       </IonApp>
-    )
-  };
+    );
+  }
 
   return (
     <IonApp>
@@ -77,9 +82,10 @@ const App: React.FC = () => {
         </IonReactRouter>
       ) : (
         <IonReactRouter>
-          <Route exact path="/">
-            <Home />
-          </Route>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/tab1" component={Home} />
+          <Route exact path="/tab1/medicalCenter/:id" component={medicalCenter} />
+          <Route exact path="/tab2" component={Home} />
           <Route
             path="/login"
             render={() => <Redirect to="/" />}
@@ -93,10 +99,6 @@ const App: React.FC = () => {
           <Route
             path="/register"
             render={() => <Redirect to="/" />}
-            exact={true}
-          />
-          <Route
-            path="/medicalCenter"
             exact={true}
           />
         </IonReactRouter>

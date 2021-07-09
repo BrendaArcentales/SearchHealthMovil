@@ -18,6 +18,7 @@ import "./Home.css";
 import React from "react";
 import { useHistory } from "react-router";
 import { IonReactRouter } from "@ionic/react-router";
+import medicalCenter from "./medicalCenter";
 const Home: React.FC = () => {
   const { logout } = React.useContext(AuthProvider);
   const history = useHistory();
@@ -31,12 +32,9 @@ const Home: React.FC = () => {
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Route exact path="/tab1">
-            <Tab1 />
-          </Route>
-          <Route exact path="/tab2">
-            <Tab2 />
-          </Route>
+          <Route exact path="/tab1" component={Tab1}/>
+          <Route path="/tab1/medicalCenter/:id" component={medicalCenter}/>
+          <Route exact path="/tab2" component={Tab2}/>
           <Route exact path="/">
             <Redirect to="/tab1" />
           </Route>

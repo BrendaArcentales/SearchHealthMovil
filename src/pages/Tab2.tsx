@@ -7,11 +7,6 @@ import './Tab2.css';
 const Tab2: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Perfil del Usuario</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent>
       <IonCard >
         <IonAvatar >
