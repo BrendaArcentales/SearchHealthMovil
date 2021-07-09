@@ -7,11 +7,6 @@ import './TabUserProfile.css';
 const TabUserProfile: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Perfil del Usuario</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent>
       <IonCard >
         <IonAvatar >

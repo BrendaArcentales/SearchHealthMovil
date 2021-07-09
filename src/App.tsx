@@ -33,23 +33,23 @@ const App: React.FC = () => {
   //Loading screen
   const [showLoading, setShowLoading] = React.useState(true);
 
-  React.useEffect(()=>{
-    if(showLoading){
+  React.useEffect(() => {
+    if (showLoading) {
       //do initialize
-      (async()=>{
+      (async () => {
         await initialize();
         setShowLoading(false);
       })();
     }
   }, [initialize, showLoading]);
 
-  if(showLoading){
+  if (showLoading) {
     return (
       <IonApp>
         <IonLoading message="Cargando Usuario ..." isOpen={showLoading} />
       </IonApp>
-    )
-  };
+    );
+  }
 
   return (
     <IonApp>
@@ -102,10 +102,6 @@ const App: React.FC = () => {
           <Route
             path="/register"
             render={() => <Redirect to="/" />}
-            exact={true}
-          />
-          <Route
-            path="/centerDetail"
             exact={true}
           />
         </IonReactRouter>

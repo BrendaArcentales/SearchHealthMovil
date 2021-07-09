@@ -11,10 +11,16 @@ ion-header {
 
 ion-card {
   --ion-background-color: transparent;
+  
 }
 
 .logo-size {
   width: 150px;
+}
+
+.img-size {
+  height: 140px;
+  width: 100%;
 }
 
 .gradient-1 {
@@ -27,11 +33,11 @@ ion-card {
 }
 
 .link {
-    color: #be3917;
-    outline: none;
-    text-decoration: none;
-    padding: 2px 1px 0;
-  }
+  color: #be3917;
+  outline: none;
+  text-decoration: none;
+  padding: 2px 1px 0;
+}
 
 .button {
   border-radius: 50px;

@@ -10,7 +10,8 @@ import {
   IonSearchbar,
   IonTitle,
   IonToolbar,
-  useIonViewWillEnter,
+  IonCard,
+  IonThumbnail,
 } from "@ionic/react";
 import { useEffect, useState } from "react";
 import ExploreContainer from "../components/ExploreContainer";
@@ -70,19 +71,17 @@ const TabCenters: React.FC = () => {
           <IonTitle>Lista de centros</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent fullscreen>
         <IonSearchbar
           value={searchText}
           onIonChange={(e) => setSearchText(e.detail.value!)}
         ></IonSearchbar>
         <IonList>
-          {" "}
           {listCenter.map((center) => (
-            <div className="home-container">
-              <IonItem key={center.id}>
-                <IonAvatar slot="start">
+              <IonItem key={center.id} >
+                <IonThumbnail slot="start">
                   <img src={center.photo}></img>
-                </IonAvatar>
+                </IonThumbnail>
                 <IonLabel>
                   <h2>{center.name}</h2>
                   <h3>Sector: {center.sector}</h3>
@@ -95,7 +94,6 @@ const TabCenters: React.FC = () => {
                   </p>
                 </IonLabel>
               </IonItem>
-            </div>
           ))}
         </IonList>
       </IonContent>
