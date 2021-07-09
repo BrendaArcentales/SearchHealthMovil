@@ -10,8 +10,9 @@ import {
 import {  logOut } from "ionicons/icons";
 import AuthProvider from "../services/auth";
 import { listCircleOutline, personCircleOutline} from 'ionicons/icons';
-import Tab1 from './Tab1';
-import Tab2 from './Tab2';
+import TabCenters from './TabCenters';
+import TabUserProfile from './TabUserProfile';
+import CenterDetail from "./CenterDetail";
 import { Redirect, Route } from 'react-router-dom';
 import { toast } from "../toast";
 import "./Home.css";
@@ -31,22 +32,25 @@ const Home: React.FC = () => {
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Route exact path="/tab1">
-            <Tab1 />
+          <Route exact path="/centers">
+            <TabCenters />
           </Route>
-          <Route exact path="/tab2">
-            <Tab2 />
+          <Route exact path="/user">
+            <TabUserProfile />
+          </Route>
+          <Route exact path="/centers/centerDetail/:id" component={CenterDetail}>
+            
           </Route>
           <Route exact path="/">
-            <Redirect to="/tab1" />
+            <Redirect to="/centers" />
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
-          <IonTabButton tab="tab1" href="/tab1">
+          <IonTabButton tab="centers" href="/centers">
             <IonIcon icon={listCircleOutline} />
             <IonLabel>Centros Médicos</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab2" href="/tab2">
+          <IonTabButton tab="user" href="/user">
             <IonIcon icon={personCircleOutline} />
             <IonLabel>Perfil</IonLabel>
           </IonTabButton>

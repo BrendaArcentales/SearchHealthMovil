@@ -30,7 +30,7 @@ import AuthProvider from "./services/auth";
 const App: React.FC = () => {
   const { authValues, initialize } = React.useContext(AuthProvider);
 
-  //Loading screen 
+  //Loading screen
   const [showLoading, setShowLoading] = React.useState(true);
 
   React.useEffect(()=>{
@@ -80,6 +80,15 @@ const App: React.FC = () => {
           <Route exact path="/">
             <Home />
           </Route>
+          <Route exact path="/centers">
+            <Home />
+          </Route>
+          <Route exact path="/user">
+            <Home />
+          </Route>
+          <Route exact path="/centers/centerDetail/:id">
+            <Home />
+          </Route>
           <Route
             path="/login"
             render={() => <Redirect to="/" />}
@@ -96,7 +105,7 @@ const App: React.FC = () => {
             exact={true}
           />
           <Route
-            path="/medicalCenter"
+            path="/centerDetail"
             exact={true}
           />
         </IonReactRouter>

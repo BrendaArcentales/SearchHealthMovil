@@ -2,9 +2,9 @@ import { IonAvatar, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSu
 import { pencil } from 'ionicons/icons';
 import { Link } from 'react-router-dom';
 import ExploreContainer from '../components/ExploreContainer';
-import './Tab2.css';
+import './TabUserProfile.css';
 
-const Tab2: React.FC = () => {
+const TabUserProfile: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -31,4 +31,4 @@ const Tab2: React.FC = () => {
   );
 };
 
-export default Tab2;
+export default TabUserProfile;
