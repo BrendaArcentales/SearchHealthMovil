@@ -68,7 +68,17 @@ const Tab1: React.FC = () => {
 
   return (
     <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Bienvenido</IonTitle>
+        </IonToolbar>
+      </IonHeader>
       <IonContent>
+        <IonHeader>
+          <IonToolbar>
+            <IonTitle>Bienvenido</IonTitle>
+          </IonToolbar>
+        </IonHeader>
         <IonSearchbar
           value={searchText}
           onIonChange={(e) => setSearchText(e.detail.value!)}
