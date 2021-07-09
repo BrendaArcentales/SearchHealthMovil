@@ -10,21 +10,19 @@ import {
   IonSearchbar,
   IonTitle,
   IonToolbar,
-  IonButton, IonThumbnail,
+  IonCard,
+  IonThumbnail,
 } from "@ionic/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ExploreContainer from "../components/ExploreContainer";
 import { medicalCenter } from "../modelo/medicalCenters";
-import "./Tab1.css";
+import "./TabCenters.css";
+import firebase from "firebase/app";
 import { Link } from "react-router-dom";
 import { addCircleOutline } from "ionicons/icons";
-import { useHistory } from "react-router";
-import firebase from "firebase/app";
-
-const Tab1: React.FC = () => {
+const TabCenters: React.FC = () => {
   const [listCenter, setListCenter] = useState<medicalCenter[]>([]);
   const [searchText, setSearchText] = useState("");
-  const history = useHistory();
 
   useEffect(() => {
     const getlistCenter = async () => {
@@ -68,46 +66,39 @@ const Tab1: React.FC = () => {
 
   return (
     <IonPage>
-      <IonContent>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Lista de centros</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent fullscreen>
         <IonSearchbar
           value={searchText}
           onIonChange={(e) => setSearchText(e.detail.value!)}
-        />
+        ></IonSearchbar>
         <IonList>
-          {listCenter
-            .filter((val) => {
-              if (searchText == "") {
-                return val;
-              } else if (
-                val.name.toLowerCase().includes(searchText.toLowerCase())
-              ) {
-                return val;
-              }
-            })
-            .map((center) => (
-              <div className="home-container">
-                <IonItem key={center.id}>
-                  <IonThumbnail slot="start">
-                    <img src={center.photo}/>
-                  </IonThumbnail>
-                  <IonLabel>
-                    <h2>{center.name}</h2>
-                    <h3>Sector: {center.sector}</h3>
-                    <p>Tipo:{center.type}</p>
-                    <p>
-                      <Link to={`/tab1/medicalCenter/${center.id}`}>
-                        <IonIcon icon={addCircleOutline}></IonIcon>Ver mas
-                        detalles
-                      </Link>
-                    </p>
-                  </IonLabel>
-                </IonItem>
-              </div>
-            ))}
+          {listCenter.map((center) => (
+              <IonItem key={center.id} >
+                <IonThumbnail slot="start">
+                  <img src={center.photo}></img>
+                </IonThumbnail>
+                <IonLabel>
+                  <h2>{center.name}</h2>
+                  <h3>Sector: {center.sector}</h3>
+                  <p>Tipo:{center.type}</p>
+                  <p>
+                    <Link to={`/centers/centerDetail/${center.id}`}>
+                      <IonIcon icon={addCircleOutline}></IonIcon>Ver mas
+                      detalles
+                    </Link>
+                  </p>
+                </IonLabel>
+              </IonItem>
+          ))}
         </IonList>
       </IonContent>
     </IonPage>
   );
 };
 
-export default Tab1;
+export default TabCenters;

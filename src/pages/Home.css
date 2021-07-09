@@ -82,7 +82,6 @@
   animation: fadeout 1s;
 }
 
-
 @keyframes fadein {
   from {
     opacity: 0;

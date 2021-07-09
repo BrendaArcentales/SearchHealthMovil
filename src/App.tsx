@@ -5,7 +5,6 @@ import { IonReactRouter } from "@ionic/react-router";
 import Home from "./pages/Home";
 import Login from "./pages/login";
 import Register from "./pages/register";
-import Medical from "./pages/medicalCenter";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -27,10 +26,6 @@ import "@ionic/react/css/display.css";
 import "./theme/variables.css";
 import Recover from "./pages/recover";
 import AuthProvider from "./services/auth";
-import MedicalCenter from "./pages/medicalCenter";
-import medicalCenter from "./pages/medicalCenter";
-import Tab1 from "./pages/Tab1";
-import Tab2 from "./pages/Tab2";
 
 const App: React.FC = () => {
   const { authValues, initialize } = React.useContext(AuthProvider);
@@ -82,10 +77,18 @@ const App: React.FC = () => {
         </IonReactRouter>
       ) : (
         <IonReactRouter>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/tab1" component={Home} />
-          <Route exact path="/tab1/medicalCenter/:id" component={medicalCenter} />
-          <Route exact path="/tab2" component={Home} />
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route exact path="/centers">
+            <Home />
+          </Route>
+          <Route exact path="/user">
+            <Home />
+          </Route>
+          <Route exact path="/centers/centerDetail/:id">
+            <Home />
+          </Route>
           <Route
             path="/login"
             render={() => <Redirect to="/" />}

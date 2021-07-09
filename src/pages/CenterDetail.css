@@ -1,0 +1,46 @@
+.home-container {
+  position: relative;
+  display: center;
+  flex-direction: column;
+  height: 100%;
+}
+.img-style {
+  height: 140px;
+  width: 100%
+}
+
+.ripple-parent {
+  position: relative;
+  overflow: hidden;
+}
+
+.color-link {
+  color: #1618a7;
+  outline: none;
+  text-decoration: none;
+  padding: 2px 1px 0;
+}
+
+.fade-in {
+  animation: fadein 2s;
+}
+.fade-out {
+  animation: fadeout 1s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
