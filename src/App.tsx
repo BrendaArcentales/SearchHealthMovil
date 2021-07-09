@@ -95,6 +95,10 @@ const App: React.FC = () => {
             render={() => <Redirect to="/" />}
             exact={true}
           />
+          <Route
+            path="/medicalCenter"
+            exact={true}
+          />
         </IonReactRouter>
       )}
     </IonApp>

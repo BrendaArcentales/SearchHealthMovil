@@ -1,25 +1,23 @@
 import {
-  IonCard,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonCardContent,
-  IonItem,
   IonIcon,
   IonLabel,
-  IonContent,
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonButton,
+  IonTabs,
+  IonTabBar,
+  IonTabButton,
+  IonRouterOutlet,
+  IonApp,
 } from "@ionic/react";
-import { personAdd, logIn, ellipse } from "ionicons/icons";
+import {  logOut } from "ionicons/icons";
 import AuthProvider from "../services/auth";
+import { listCircleOutline, personCircleOutline} from 'ionicons/icons';
+import Tab1 from './Tab1';
+import Tab2 from './Tab2';
+import { Redirect, Route } from 'react-router-dom';
 import { toast } from "../toast";
 import "./Home.css";
 import React from "react";
 import { useHistory } from "react-router";
+import { IonReactRouter } from "@ionic/react-router";
 const Home: React.FC = () => {
   const { logout } = React.useContext(AuthProvider);
   const history = useHistory();
@@ -29,43 +27,37 @@ const Home: React.FC = () => {
     history.replace("/login");
   }
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Bienvenido</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
-    
-        <IonCard>
-          <IonCardHeader>
-            <IonCardTitle>Search Health</IonCardTitle>
-            <IonCardSubtitle>Pagina de inicio</IonCardSubtitle>
-          </IonCardHeader>
-          <IonCardContent>
-            Keep close to Nature's heart... and break clear away, once in
-            awhile, and climb a mountain or spend a week in the woods. Wash your
-            spirit clean.
-          </IonCardContent>
-        </IonCard>
-        <IonCard>
-          <IonItem
-            routerLink="/login"
-            className="ion-activated"
-            color="secondary"
-          >
-            <IonIcon icon={logIn} slot="start" />
-            <IonLabel>Iniciar Sesión</IonLabel>
-          </IonItem>
-          <IonItem routerLink="/register">
-            <IonIcon icon={personAdd} slot="start" />
-            <IonLabel>Registrarse</IonLabel>
-          </IonItem>
-        </IonCard>
-        <IonButton onClick={onLogout}>Cerrar Sesión</IonButton>
-
-      </IonContent>
-    </IonPage>
+    <IonApp>
+    <IonReactRouter>
+      <IonTabs>
+        <IonRouterOutlet>
+          <Route exact path="/tab1">
+            <Tab1 />
+          </Route>
+          <Route exact path="/tab2">
+            <Tab2 />
+          </Route>
+          <Route exact path="/">
+            <Redirect to="/tab1" />
+          </Route>
+        </IonRouterOutlet>
+        <IonTabBar slot="bottom">
+          <IonTabButton tab="tab1" href="/tab1">
+            <IonIcon icon={listCircleOutline} />
+            <IonLabel>Centros Médicos</IonLabel>
+          </IonTabButton>
+          <IonTabButton tab="tab2" href="/tab2">
+            <IonIcon icon={personCircleOutline} />
+            <IonLabel>Perfil</IonLabel>
+          </IonTabButton>
+          <IonTabButton  >
+            <IonIcon  onClick={onLogout} icon={logOut} />
+            <IonLabel>Cerrar Sesión</IonLabel>
+          </IonTabButton>
+        </IonTabBar>
+      </IonTabs>
+    </IonReactRouter>
+  </IonApp>
   );
 };
 
