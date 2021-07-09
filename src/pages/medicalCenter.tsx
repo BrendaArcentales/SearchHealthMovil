@@ -61,7 +61,7 @@ const Medical: React.FunctionComponent<medical> = ({ match, history }) => {
               <IonCardSubtitle>{dataCenter.type}</IonCardSubtitle>
             </IonCardHeader>
             <IonCardContent>
-              Horario de Atención:
+              Horario de Atención: .
               {dataCenter.start_time} - {dataCenter.end_time}
             </IonCardContent>
 
