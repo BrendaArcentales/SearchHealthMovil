@@ -1,0 +1,102 @@
+.home-container {
+    position: relative;
+    display: center;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .home-container .header {
+    flex: 1;
+  }
+  
+  .home-container .header .title {
+    padding-top: 70px;
+  }
+  
+  .home-container .header .img {
+    width: 150px;
+  }
+  
+  .home-container .container {
+    flex: 2;
+  }
+  
+  .home-container .container .form {
+    flex: 2;
+    --background: none;
+    background: none;
+    max-width: 350px;
+    margin: 15px auto;
+  }
+  
+  .home-container .container .form .item {
+    --background: #ffffff;
+    --border-radius: 4px;
+    --border-color: transparent !important;
+    --highlight-height: 0;
+    color: #020202;
+    margin-top: 15px;
+    margin-bottom: 5px;
+  }
+  
+  .link {
+    color: #7bc2ca;
+    outline: none;
+    text-decoration: none;
+    padding: 2px 1px 0;
+  }
+  
+  .header-style {
+    height: 150px;
+    overflow: hidden;
+  }
+  
+  .header-style .svg {
+    height: 100%;
+    width: 100%;
+  }
+  
+  .header-style .diseño {
+    stroke: none;
+    fill: #08f;
+  }
+  
+  .gradient-1 {
+    --background: linear-gradient(
+      180deg,
+      rgba(132, 163, 183, 1) 0%,
+      rgb(74, 217, 236) 100%
+    );
+    background: linear-gradient(180deg, #7bc2ca 0%, #ffffff 100%);
+  }
+  
+  .ripple-parent {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .fade-in {
+    animation: fadein 2s;
+  }
+  .fade-out {
+    animation: fadeout 1s;
+  }
+  
+  
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes fadeout {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  
