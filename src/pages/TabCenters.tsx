@@ -14,7 +14,7 @@ import {
   IonThumbnail,
 } from "@ionic/react";
 import { useEffect, useState } from "react";
-import ExploreContainer from "../components/ExploreContainer";
+
 import { medicalCenter } from "../modelo/medicalCenters";
 import "./TabCenters.css";
 import firebase from "firebase/app";
@@ -77,7 +77,16 @@ const TabCenters: React.FC = () => {
           onIonChange={(e) => setSearchText(e.detail.value!)}
         ></IonSearchbar>
         <IonList>
-          {listCenter.map((center) => (
+          {listCenter
+            .filter((val) => {
+              if (searchText == "") {
+                return val;
+              } else if (
+                val.name.toLowerCase().includes(searchText.toLowerCase())
+              ) {
+                return val;
+              }
+            }).map((center) => (
               <IonItem key={center.id} >
                 <IonThumbnail slot="start">
                   <img src={center.photo}></img>
