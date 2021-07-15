@@ -14,7 +14,7 @@ import React, { useState } from "react";
 import "./Login.css";
 import { Link, useHistory } from "react-router-dom";
 import { toast } from "../toast";
-import AuthProvider from "../services/auth";
+import AuthProvider from "../services/AuthProvider";
 
 const Register: React.FC = () => {
   const {

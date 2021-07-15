@@ -75,7 +75,7 @@ const CenterDetail: React.FC<Medical> = ({ match, history }) => {
                   </Link>
                   <IonLabel> - </IonLabel>
                   <Link className="color-link" to="/centers">
-                     Ver comentarios
+                    Ver comentarios
                   </Link>
                 </div>
               </IonCardContent>
