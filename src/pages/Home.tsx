@@ -8,7 +8,7 @@ import {
   IonApp,
 } from "@ionic/react";
 import { logOut } from "ionicons/icons";
-import AuthProvider from "../services/auth";
+import AuthProvider from "../services/AuthProvider";
 import { listCircleOutline, personCircleOutline } from "ionicons/icons";
 import TabCenters from "./TabCenters";
 import TabUserProfile from "./TabUserProfile";

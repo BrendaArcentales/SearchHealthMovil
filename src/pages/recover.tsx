@@ -9,12 +9,11 @@ import {
   IonItem,
   IonLabel,
 } from "@ionic/react";
-import { IonGrid, IonRow, IonCol } from "@ionic/react";
 import "./Login.css";
 
 import React, { useState } from "react";
 import { toast } from "../toast";
-import AuthProvider from "../services/auth";
+import AuthProvider from "../services/AuthProvider";
 import { useHistory } from "react-router";
 
 const Recover: React.FC = () => {

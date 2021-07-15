@@ -1,5 +1,5 @@
 import React from "react";
-import { auth, db } from "../firebaseConfig";
+import { auth, db } from "../firebase/firebaseConfig";
 
 export const Context = React.createContext<any>(undefined);
 
@@ -16,15 +16,15 @@ export const AuthProvider: React.FC = ({ children }) => {
     console.log(email, password);
     return new Promise(async (resolve) => {
       let authUser = await auth.signInWithEmailAndPassword(email, password);
-      if(authUser){
+      if (authUser) {
         setAuthValues({
-          authenticated: true, 
-          user: {...authUser},
+          authenticated: true,
+          user: { ...authUser },
         });
         resolve(true);
-      }else{
+      } else {
         setAuthValues({
-          authenticated: false, 
+          authenticated: false,
           user: null,
         });
         resolve(false);
@@ -32,49 +32,54 @@ export const AuthProvider: React.FC = ({ children }) => {
     });
   };
 
-  const logout = async ()=>{
+  const logout = async () => {
     await auth.signOut();
     setAuthValues({
-      authenticated: false, 
+      authenticated: false,
       user: null,
     });
     return Promise.resolve(true);
-  }
+  };
 
-  const register = ( email: string, password: string, displayName: string) => {
-    console.log("valoes que entran ", email)
+  const register = (email: string, password: string, displayName: string) => {
+    console.log("valoes que entran ", email);
     return new Promise(async (resolve) => {
       try {
-        let authUser = await auth.createUserWithEmailAndPassword(email, password);
-        if(authUser){
-          await auth.currentUser?.updateProfile({displayName});
+        let authUser = await auth.createUserWithEmailAndPassword(
+          email,
+          password
+        );
+        if (authUser) {
           setAuthValues({
-            authenticated: true, 
-            user: {...authUser},
+            authenticated: true,
+            user: { ...authUser },
+          });
+          const uidValue = authUser.user?.uid;
+          await db.collection("users").doc(uidValue).set({
+            email: email,
+            name: displayName,
+            uid: uidValue,
           });
           resolve(true);
-        }else{
+        } else {
           resolve(false);
         }
-      }catch(e){
+      } catch (e) {
         setAuthValues({
           user: null,
-          authenticated: false, 
-          errors: {...e}
+          authenticated: false,
+          errors: { ...e },
         });
         resolve(false);
       }
-      
     });
   };
 
-
-  const sendPasswordResetEmail = async (email : string) => {
+  const sendPasswordResetEmail = async (email: string) => {
     await auth.sendPasswordResetEmail(email);
-  
+
     return Promise.resolve(true);
   };
-
 
   //initialize firebase when app starts
   const initialize = () => {
@@ -100,16 +105,14 @@ export const AuthProvider: React.FC = ({ children }) => {
     });
   };
 
-
   let state = {
-    authValues, 
-    initialize, 
-    login, 
+    authValues,
+    initialize,
+    login,
     logout,
-    register, 
-    sendPasswordResetEmail
+    register,
+    sendPasswordResetEmail,
   };
-
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 };

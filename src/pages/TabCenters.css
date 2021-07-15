@@ -1,35 +1,52 @@
 .home-container {
-    position: relative;
-    display: center;
-    flex-direction: column;
-    height: 100%;
-  }
+  position: relative;
+  display: center;
+  flex-direction: column;
+  height: 100%;
+}
 
-  ion-header {
-    position: relative;
-  }
+ion-header {
+  position: relative;
+}
 
-  .logo-size {
-    width: 150px;
-  }
-  .gradient-1 {
-    --background: linear-gradient(
-      180deg,
-      rgba(132, 163, 183, 1) 0%,
-      rgb(74, 217, 236) 100%
-    );
-    background: linear-gradient(180deg, #7bc2ca 0%, #ffffff 100%);
-  }
+.logo-size {
+  width: 150px;
+}
+.gradient-1 {
+  --background: linear-gradient(
+    180deg,
+    rgba(132, 163, 183, 1) 0%,
+    rgb(74, 217, 236) 100%
+  );
+  background: linear-gradient(180deg, #7bc2ca 0%, #ffffff 100%);
+}
 
-  .link {
-      color: #be3917;
-      outline: none;
-      text-decoration: none;
-      padding: 2px 1px 0;
-    }
+.link {
+  color: #be3917;
+  outline: none;
+  text-decoration: none;
+  padding: 2px 1px 0;
+}
 
-  .button {
-    border-radius: 50px;
-    width: 170px;
-    height: 35px;
+.button {
+  border-radius: 50px;
+  width: 170px;
+  height: 35px;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
   }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

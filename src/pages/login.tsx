@@ -21,7 +21,7 @@ import { Link } from "react-router-dom";
 
 import { toast } from "../toast";
 import React from "react";
-import AuthProvider from "../services/auth";
+import AuthProvider from "../services/AuthProvider";
 import { useHistory } from "react-router";
 const Login: React.FC = () => {
   const [usermail, setUsermail] = useState("");
