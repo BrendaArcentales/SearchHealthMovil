@@ -16,39 +16,97 @@ import {
   IonLabel,
   IonList,
   IonSpinner,
+  IonIcon,
+  useIonAlert,
 } from "@ionic/react";
 import "./CenterDetail.css";
-import { medicalCenter } from "../modelo/medicalCenters";
-import firebase from "firebase/app";
 import { RouteComponentProps } from "react-router";
 import { Link } from "react-router-dom";
+import { starOutline, star } from "ionicons/icons";
+import useCenter from "../data/useCenter";
+import AuthProvider from "../services/AuthProvider";
+import { db } from "../firebase/firebaseConfig";
+import useFavorites from "../data/useFavorites";
+import { toast } from "../toast";
+
 interface Medical
   extends RouteComponentProps<{
     id: string;
   }> {}
 
 const CenterDetail: React.FC<Medical> = ({ match, history }) => {
-  const [dataCenter, setDataCenter] = useState<any>([]);
+  const [dataCenter] = useCenter(match.params.id);
   const [days, setDays] = useState<string>("");
-  useEffect(() => {
-    const getlistCenter = async () => {
-      let list: medicalCenter[] = [];
-
-      const res = await firebase
-        .firestore()
-        .collection("medicalCenters")
-        .doc(match.params.id)
-        .get();
-      setDataCenter(res.data());
-    };
-    getlistCenter();
-  }, []);
+  const [favorite, setFavorite] = useState<boolean>(false);
+  const { authValues } = React.useContext(AuthProvider);
+  const [listFavorites] = useFavorites(authValues.user.uid);
+  const [present] = useIonAlert();
 
   useEffect(() => {
     if (dataCenter) {
       setDays(dataCenter.days);
     }
   }, [dataCenter]);
+
+  useEffect(() => {
+    if (dataCenter && listFavorites) {
+      listFavorites.filter((item: any) => {
+        if (item.id == dataCenter.id) {
+          setFavorite(true);
+        }
+      });
+    }
+  }, [listFavorites, dataCenter]);
+
+  const handleSaveFavorite = async () => {
+    await db
+      .collection("users")
+      .doc(authValues.user.uid)
+      .collection("favorites")
+      .doc(dataCenter.id)
+      .set({ ...dataCenter })
+      .then(() => {
+        setFavorite(true);
+        toast("Agregado a lista de favoritos", "success");
+      });
+  };
+
+  const handleEditFavorite = async () => {
+    await db
+      .collection("users")
+      .doc(authValues.user.uid)
+      .collection("favorites")
+      .doc(dataCenter.id)
+      .delete()
+      .then(() => {
+        setFavorite(false);
+        toast("Se ha quitado de lista de favoritos", "success");
+      });
+  };
+
+  const handleAddFavorite = () => {
+    present({
+      cssClass: "my-css",
+      message: "Desea añadir a favoritos este centro médico",
+      buttons: [
+        { text: "Añadir", handler: (d) => handleSaveFavorite() },
+        "Cancelar",
+      ],
+      onDidDismiss: (e) => console.log("did dismiss"),
+    });
+  };
+  const handleDeleteFavorite = () => {
+    present({
+      cssClass: "my-css",
+      message: "Desea eliminar este centro médico de su lista de favoritos",
+      buttons: [
+        { text: "Eliminar", handler: (d) => handleEditFavorite() },
+        "Cancelar",
+      ],
+      onDidDismiss: (e) => console.log("did dismiss"),
+    });
+  };
+
   return (
     <IonPage>
       <IonHeader translucent={true}>
@@ -69,6 +127,27 @@ const CenterDetail: React.FC<Medical> = ({ match, history }) => {
                 <IonCardSubtitle>{dataCenter.type}</IonCardSubtitle>
               </IonCardHeader>
               <IonCardContent>
+                {favorite ? (
+                  <div>
+                    <IonIcon
+                      onClick={() => handleDeleteFavorite()}
+                      slot="end"
+                      size="large"
+                      color={"secondary"}
+                      icon={star}
+                    />
+                  </div>
+                ) : (
+                  <div>
+                    <IonIcon
+                      onClick={() => handleAddFavorite()}
+                      slot="end"
+                      size="large"
+                      icon={starOutline}
+                    />
+                  </div>
+                )}
+
                 <div className="ion-text-center">
                   <Link className="color-link" to="/centers">
                     Ver mapa
@@ -93,7 +172,11 @@ const CenterDetail: React.FC<Medical> = ({ match, history }) => {
                   days.split(",").map((day: string) => {
                     if (day !== "") {
                       return (
-                        <IonChip color="secondary" outline>
+                        <IonChip
+                          color="secondary"
+                          outline
+                          key={`${dataCenter.id}+${day}`}
+                        >
                           <IonLabel>{day}</IonLabel>
                         </IonChip>
                       );
@@ -140,7 +223,7 @@ const CenterDetail: React.FC<Medical> = ({ match, history }) => {
                   {dataCenter && dataCenter.specialties ? (
                     dataCenter.specialties.map((item: string) => {
                       return (
-                        <IonItem>
+                        <IonItem key={`${dataCenter.id}+${item}`}>
                           <IonLabel>{item}</IonLabel>
                         </IonItem>
                       );

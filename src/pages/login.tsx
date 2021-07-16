@@ -3,14 +3,9 @@ import {
   IonButton,
   IonContent,
   IonPage,
-  IonHeader,
-  IonToolbar,
   IonTitle,
   IonInput,
   IonRippleEffect,
-  IonImg,
-  IonCardSubtitle,
-  IonCardTitle,
   IonCardContent,
   IonItem,
   IonLabel,
@@ -30,7 +25,6 @@ const Login: React.FC = () => {
   const history = useHistory();
 
   const onlogin = async () => {
-    console.log(usermail);
     if (usermail.trim() === "" || userpassword.trim() === "") {
       return toast("Los campos son obligatorios", "danger");
     }

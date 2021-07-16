@@ -13,7 +13,6 @@ export const AuthProvider: React.FC = ({ children }) => {
   });
 
   const login = (email: string, password: string) => {
-    console.log(email, password);
     return new Promise(async (resolve) => {
       let authUser = await auth.signInWithEmailAndPassword(email, password);
       if (authUser) {
@@ -42,7 +41,6 @@ export const AuthProvider: React.FC = ({ children }) => {
   };
 
   const register = (email: string, password: string, displayName: string) => {
-    console.log("valoes que entran ", email);
     return new Promise(async (resolve) => {
       try {
         let authUser = await auth.createUserWithEmailAndPassword(
