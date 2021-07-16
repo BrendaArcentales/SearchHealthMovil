@@ -9,7 +9,7 @@ import {
 } from "@ionic/react";
 import { logOut } from "ionicons/icons";
 import AuthProvider from "../services/AuthProvider";
-import { listCircleOutline, personCircleOutline } from "ionicons/icons";
+import { listCircleOutline, personCircleOutline, star } from "ionicons/icons";
 import TabCenters from "./TabCenters";
 import TabUserProfile from "./TabUserProfile";
 import CenterDetail from "./CenterDetail";
@@ -18,6 +18,7 @@ import "./Home.css";
 import React from "react";
 import { useHistory } from "react-router";
 import { IonReactRouter } from "@ionic/react-router";
+import FavoriteCenters from "./FavoriteCenters";
 const Home: React.FC = () => {
   const { logout } = React.useContext(AuthProvider);
   const history = useHistory();
@@ -37,11 +38,14 @@ const Home: React.FC = () => {
             <Route exact path="/user">
               <TabUserProfile />
             </Route>
+            <Route exact path="/favorites">
+              <FavoriteCenters />
+            </Route>
             <Route
               exact
               path="/centers/centerDetail/:id"
               component={CenterDetail}
-            ></Route>
+            />
             <Route exact path="/">
               <Redirect to="/centers" />
             </Route>
@@ -50,6 +54,10 @@ const Home: React.FC = () => {
             <IonTabButton tab="centers" href="/centers">
               <IonIcon icon={listCircleOutline} />
               <IonLabel>Centros Médicos</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="favorites" href="/favorites">
+              <IonIcon icon={star} />
+              <IonLabel>Favoritos</IonLabel>
             </IonTabButton>
             <IonTabButton tab="user" href="/user">
               <IonIcon icon={personCircleOutline} />
