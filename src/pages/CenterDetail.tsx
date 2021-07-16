@@ -149,11 +149,11 @@ const CenterDetail: React.FC<Medical> = ({ match, history }) => {
                 )}
 
                 <div className="ion-text-center">
-                  <Link className="color-link" to="/centers">
+                  <Link className="color-link" to={`/centers/centerDetail/${dataCenter.id}/map`}>
                     Ver mapa
                   </Link>
                   <IonLabel> - </IonLabel>
-                  <Link className="color-link" to="/centers">
+                  <Link className="color-link" to={`/centers/centerDetail/${dataCenter.id}/comments`}>
                     Ver comentarios
                   </Link>
                 </div>
