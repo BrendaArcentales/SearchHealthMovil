@@ -15,10 +15,16 @@ const AuthenticatedApp = () => {
       <Route exact path="/user">
         <Home />
       </Route>
-        <Route exact path="/favorites">
-            <Home />
-        </Route>
+      <Route exact path="/favorites">
+        <Home />
+      </Route>
       <Route exact path="/centers/centerDetail/:id">
+        <Home />
+      </Route>
+      <Route exact path="/centers/centerDetail/:id/map">
+        <Home />
+      </Route>
+      <Route exact path="/centers/centerDetail/:id/comments">
         <Home />
       </Route>
       <Redirect to={"/"}></Redirect>
