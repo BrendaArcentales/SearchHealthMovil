@@ -32,7 +32,7 @@ import {
     
   
         <IonContent>
-        <IonLabel>Vista de comentario</IonLabel>
+        <IonLabel>IdCenter: {match.params.id}</IonLabel>
         </IonContent>
       </IonPage>
     );

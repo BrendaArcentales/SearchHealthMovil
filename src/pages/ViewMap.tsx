@@ -11,8 +11,14 @@ import {
 import "./TabUserProfile.css";
 
 import React from "react";
+import { RouteComponentProps } from "react-router";
 
-const ViewMap: React.FC = () => {
+interface Comment
+  extends RouteComponentProps<{
+    id: string;
+  }> {}
+
+const ViewMap: React.FC <Comment>= ({match, history}) => {
   return (
     <IonPage>
       <IonHeader translucent={true}>
@@ -20,13 +26,12 @@ const ViewMap: React.FC = () => {
         
           <IonButtons slot="start">
             <IonBackButton defaultHref="/centers" />
-        
           </IonButtons>
         </IonToolbar>
       </IonHeader>
 
       <IonContent>
-        
+        <IonLabel>ID Center: {match.params.id}  </IonLabel>
       </IonContent>
     </IonPage>
   );
