@@ -4,7 +4,7 @@ import {
     IonPage,
     IonTitle,
     IonToolbar,
-    IonLabel, 
+    IonLabel,
     IonButtons,
     IonBackButton,
     useIonAlert,
@@ -24,7 +24,7 @@ import {
     IonInput
   } from "@ionic/react";
   import "./TabUserProfile.css";
-  
+
   import React, { useEffect, useState } from "react";
   import { RouteComponentProps } from "react-router";
 import useComments from "../data/useComments";
@@ -35,6 +35,7 @@ import useFavorites from "../data/useFavorites";
 import { db } from "../firebase/firebaseConfig";
 import medicalCenters from "../data/services/medicalCenters";
 import Users from "../data/services/user"
+import useUser from "../data/useUser";
 
   interface Comment
   extends RouteComponentProps<{
@@ -48,12 +49,18 @@ import Users from "../data/services/user"
     const [text, setText] = useState<string>();
     const idC=match.params.id;
     const [number, setNumber] = useState<number>();
+    const [dataUser] = useUser();
 
     const handleCreateComment= ()=> {
       db.collection("medicalCenters").doc(idC).collection("comments").add({
-        comment:text,score:number,name:"brenda"
+        comment:text,score:number,
+          name: dataUser.name,
+          uid: dataUser.uid,
+          photo: dataUser.photo
     });
     };
+
+    console.log("datos usuario", dataUser);
 
     return (
       <IonPage>
@@ -120,5 +127,5 @@ import Users from "../data/services/user"
   </IonPage>
     );
   };
-  
+
   export default ViewComments;
