@@ -32,7 +32,6 @@ const Login: React.FC = () => {
     if (!res) {
       toast("La combinación de correo y contraseña es erronea", "danger");
     } else {
-      toast("Acceso concedido", "success");
       history.replace("/");
     }
     console.log(`${res ? "Acceso concedido" : "Acceso denegado"}`);
