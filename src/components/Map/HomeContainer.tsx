@@ -13,11 +13,9 @@ class HomeContainer extends Component {
     constructor(props: any) {
         super(props);
         this.location = this.props.children;
-        // @ts-ignore
-        const {children: {lat: lat}} = this.props;
         this.state = {
             center: {
-                lat: lat,
+                lat: this.location.lat,
                 lng: this.location.lng,
             },
             loading: false
