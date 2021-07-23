@@ -57,7 +57,6 @@ export const AuthProvider: React.FC = ({ children }) => {
             email: email,
             name: displayName,
             uid: uidValue,
-            photo: "https://firebasestorage.googleapis.com/v0/b/search-health-ce2ca.appspot.com/o/users%2Fblank.png?alt=media&token=011f9092-4da2-4255-94aa-8daf997e0f1a",
           });
           resolve(true);
         } else {
