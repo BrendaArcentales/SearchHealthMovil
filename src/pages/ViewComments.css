@@ -1,0 +1,12 @@
+.myModal {
+    padding-block: 70%;
+    padding-inline: 20px;
+    background: rgba(0,0,0,0.4);
+}
+
+.myModal .modal-wrapper{
+    border-radius: 30px;
+}
+
+
+

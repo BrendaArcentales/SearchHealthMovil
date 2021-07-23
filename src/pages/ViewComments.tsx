@@ -17,26 +17,27 @@ import {
     IonThumbnail,
     IonItemDivider,
     IonItemGroup,
+    IonModal,
     IonText,
     IonTextarea,
     IonButton,
     IonCard,
-    IonInput
+    IonInput,
+    IonPopover
   } from "@ionic/react";
   import "./TabUserProfile.css";
 
   import React, { useEffect, useState } from "react";
   import { RouteComponentProps } from "react-router";
 import useComments from "../data/useComments";
-import { medicalComment } from "../modelo/comments";
+import "./ViewComments.css";
 import { sendOutline,alertCircleOutline,trash, pencilOutline} from "ionicons/icons";
-import AuthProvider from "../services/AuthProvider";
-import useFavorites from "../data/useFavorites";
 import { db } from "../firebase/firebaseConfig";
 import medicalCenters from "../data/services/medicalCenters";
 import useUser from "../data/useUser";
+import EditComment from "../components/EditComment";
 
-  interface Comment
+interface Comment
   extends RouteComponentProps<{
     id: string;
   }> {}
@@ -49,7 +50,8 @@ import useUser from "../data/useUser";
     const idC=match.params.id;
     const [number, setNumber] = useState<number>();
     const [dataUser] = useUser();
-
+    const [showFilterModal, setShowFilterModal] = useState(false);
+    const [dataComment, setDataComment] = useState({});
 
     const handleCreateComment= ()=> {
         db.collection("medicalCenters").doc(idC).collection("comments").add({
@@ -60,7 +62,6 @@ import useUser from "../data/useUser";
       });
     };
 
-    console.log("datos usuario", dataUser);
 
     const handleDelComment = async (id: any) => {
       await db
@@ -81,11 +82,15 @@ import useUser from "../data/useUser";
         onDidDismiss: (e) => console.log("did dismiss"),
       });
     };
-    const updateComment = async (id:string,text:string,score:number) => {
-      await db.collection('medicalCenters').doc(idC).collection("comments").doc(id).update(
-        {comment:text,score:score});
-    }
 
+
+    const handleOpenModal = ( data : object )=>{
+        setDataComment(data);
+        setShowFilterModal(true)
+    }
+    const handleCloseModal=()=>{
+        setShowFilterModal(false);
+    }
     return (
       <IonPage>
           <IonHeader translucent={true}>
@@ -96,7 +101,7 @@ import useUser from "../data/useUser";
         </IonToolbar>
       </IonHeader>
         <IonContent fullscreen>
-          {listComments.length > 0 ? (
+                  {listComments.length > 0 ? (
             <IonList>
               {
                 listComments.map((x:any)=>{
@@ -112,7 +117,7 @@ import useUser from "../data/useUser";
                           <p>Score:{x.score}</p>
                         </IonLabel>
                         {dataUser.uid===x.uid ?(<>
-                          <IonIcon color={"secondary"} icon={pencilOutline} onClick={() => updateComment(x.id,''+x.commment,+x.score)}/>
+                          <IonIcon color={"secondary"} icon={pencilOutline} onClick={() => handleOpenModal(x)}/>
                           <IonIcon  color={"danger"} icon={trash} onClick={()=>handleDeleteComment(x.id)}/>
                           </>) :(<></>)}
                       </IonItem>
@@ -139,11 +144,11 @@ import useUser from "../data/useUser";
     <IonRow>
       <IonCol size="7">
         <IonItem>
-      <IonTextarea  placeholder="Ingrese su comentario" value={text} onIonChange={e => setText(e.detail.value!)}></IonTextarea>
+      <IonTextarea  placeholder="Ingrese su comentario" value={text} onIonChange={e => setText(e.detail.value!)}/>
       </IonItem>
       </IonCol>
       <IonCol  size="5">
-      <IonInput  clearInput  placeholder="Score" value={number} onIonChange={e => setNumber(parseInt(e.detail.value!,10))}></IonInput>
+      <IonInput  clearInput  placeholder="Score" value={number} onIonChange={e => setNumber(parseInt(e.detail.value!, 10))}/>
       </IonCol>
       </IonRow>
       <IonItem color="primary">
@@ -151,6 +156,14 @@ import useUser from "../data/useUser";
       </IonItem>
     </IonGrid>
     </IonCard>
+            <IonModal
+                isOpen={showFilterModal}
+                onDidDismiss={() => setShowFilterModal(false)}
+                swipeToClose={true}
+                cssClass={"myModal"}
+            >
+                <EditComment comment={dataComment} idC={idC} onClose={handleCloseModal}/>
+            </IonModal>
     </IonContent>
   </IonPage>
     );
