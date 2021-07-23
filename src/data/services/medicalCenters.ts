@@ -20,4 +20,5 @@ export default Centers = {
       .doc(commentID)
       .delete();
   },
+  
 };
