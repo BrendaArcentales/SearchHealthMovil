@@ -21,6 +21,7 @@ import { IonReactRouter } from "@ionic/react-router";
 import FavoriteCenters from "./FavoriteCenters";
 import ViewMap from "./ViewMap";
 import ViewComments from "./ViewComments";
+import Guide from "./Guide";
 const Home: React.FC = () => {
   const { logout } = React.useContext(AuthProvider);
   const history = useHistory();
@@ -44,6 +45,12 @@ const Home: React.FC = () => {
               <FavoriteCenters />
             </Route>
             <Route
+                exact
+                path="/guide"
+            >
+              <Guide />
+            </Route>
+            <Route
               exact
               path="/centers/centerDetail/:id"
               component={CenterDetail}
@@ -59,6 +66,9 @@ const Home: React.FC = () => {
               component={ViewComments}
             />
             <Route exact path="/">
+              <Redirect to="/centers" />
+            </Route>
+            <Route exact path="/login">
               <Redirect to="/centers" />
             </Route>
           </IonRouterOutlet>

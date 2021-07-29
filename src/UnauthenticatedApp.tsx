@@ -3,6 +3,8 @@ import { IonRouterOutlet } from "@ionic/react";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import Recover from "./pages/recover";
+import Guide from "./pages/Guide";
+
 
 const UnauthenticatedApp = () => {
   return (
@@ -16,7 +18,11 @@ const UnauthenticatedApp = () => {
       <Route exact path="/recover">
         <Recover />
       </Route>
-      <Redirect to={"/login"} />
+
+        <Route exact path="/guide">
+            <Guide />
+        </Route>
+      <Redirect to={"/guide"} />
     </IonRouterOutlet>
   );
 };

@@ -1,0 +1,92 @@
+ion-slides ion-toolbar {
+    --background: transparent;
+    --border-color: transparent;
+}
+
+ion-slides .swiper-slide {
+    display: block;
+}
+
+ion-slides .swiper-slide img {
+    max-height: 100%;
+    max-width: 70%;
+    margin: 36px 0;
+    pointer-events: none;
+}
+
+ion-slides b {
+    font-weight: 500;
+}
+
+ion-slides p {
+    padding: 0 40px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ion-color-step-600, #60646b);
+}
+
+ion-slides p b {
+    color: var(--ion-text-color, #000000);
+}
+
+ion-slides .ios ion-list ion-item:first-child {
+    --border-width: .55px 0 0 0;
+}
+
+ion-slides .md ion-list ion-item:first-child {
+    --border-width: 1px 0 0 0;
+}
+
+
+.home-container {
+    position: relative;
+    display: center;
+    flex-direction: column;
+    height: 100%;
+}
+
+.container {
+    position: center;
+    flex-direction: column;
+    margin-top: 20%;
+    height: 100%;
+    margin-bottom: 30%;
+}
+.gradient-1 {
+    --background: linear-gradient(
+            180deg,
+            rgba(132, 163, 183, 1) 0%,
+            rgb(74, 217, 236) 100%
+    );
+    background: linear-gradient(180deg, #7bc2ca 0%, #ffffff 100%);
+}
+
+.link {
+    color: #be3917;
+    outline: none;
+    text-decoration: none;
+    padding: 2px 1px 0;
+}
+
+.button {
+    border-radius: 50px;
+    width: 170px;
+    height: 35px;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes fadeout {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}

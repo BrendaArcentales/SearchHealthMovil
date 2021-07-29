@@ -42,9 +42,9 @@ const Login: React.FC = () => {
       <IonContent>
         <div className="home-container gradient-1">
           <IonCard class="ion-no-margin" color="gradient">
-            <img className="img-size" src="assets/header.png"></img>
+            <img className="img-size" src="assets/header.png"/>
             <div className="ion-text-center">
-              <img className="logo-size" src="assets/logo.jpeg"></img>
+              <img className="logo-size" src="assets/logo.jpeg"/>
             </div>
             <IonCardContent>
               <IonItem>

@@ -1,8 +1,25 @@
-import { IonAvatar, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonIcon, IonPage, IonThumbnail, IonTitle, IonToolbar } from '@ionic/react';
+import {
+  IonAvatar,
+  IonButton,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCardTitle,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonPage,
+  IonRippleEffect,
+  IonThumbnail,
+  IonTitle,
+  IonToolbar
+} from '@ionic/react';
 import { pencil } from 'ionicons/icons';
 import useUser from '../data/useUser';
 
 import './TabUserProfile.css';
+import React from "react";
 
 const TabUserProfile: React.FC = () => {
   const [dataUser] = useUser();
@@ -27,11 +44,21 @@ const TabUserProfile: React.FC = () => {
         </IonCardHeader>
         <IonCardContent>
         <IonButton color="tertiary" expand="block">
-        <IonIcon icon={pencil}></IonIcon>Actualizar datos</IonButton>
+        <IonIcon icon={pencil}/>Actualizar datos</IonButton>
         </IonCardContent>
       </IonCard>
         </>
       ):(<></>)}
+
+      <IonButton
+          routerLink="/guide"
+          color="secondary"
+          className="ion-activatable ripple-parent button"
+      >
+        Ver guia de usuario
+        <IonRippleEffect/>
+      </IonButton>
+
     </IonContent>
 
   </IonPage>
