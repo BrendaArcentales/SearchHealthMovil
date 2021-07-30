@@ -8,56 +8,102 @@ import {
   IonCardTitle,
   IonContent,
   IonHeader,
-  IonIcon,
+  IonIcon, IonItem, IonItemDivider, IonLabel, IonList, IonModal,
   IonPage,
   IonRippleEffect,
   IonThumbnail,
   IonTitle,
   IonToolbar
 } from '@ionic/react';
-import { pencil } from 'ionicons/icons';
+import {pencil, logIn, pencilOutline} from 'ionicons/icons';
 import useUser from '../data/useUser';
 
 import './TabUserProfile.css';
-import React from "react";
+import React, {useState} from "react";
+import Header from "../components/Header";
+import EditComment from "../components/EditComment";
+import EditProfile from "../components/EditProfile";
 
 const TabUserProfile: React.FC = () => {
   const [dataUser] = useUser();
+
   console.log("datos usuario per", dataUser);
+  const [showFilterModal, setShowFilterModal] = useState(false);
+
+  const handleOpenModal = ( )=>{
+    setShowFilterModal(true)
+  }
+  const handleCloseModal=()=>{
+    setShowFilterModal(false);
+  }
+
+
   return (
     <IonPage>
-    <IonHeader>
-      <IonToolbar>
-        <IonTitle>Perfil de usuario</IonTitle>
-      </IonToolbar>
-    </IonHeader>
+   <Header pageName={"Perfil de usuario"}/>
     <IonContent>
     {dataUser!=null ?(
         <>
-        <IonThumbnail slot="start">
-          <img src={dataUser.photo} />
-        </IonThumbnail>
+
         <IonCard >
-        <IonCardHeader>
-            <IonCardTitle>Nombre: {dataUser.name}</IonCardTitle>
-            <IonCardSubtitle>Correo:{dataUser.email} </IonCardSubtitle>
-        </IonCardHeader>
-        <IonCardContent>
-        <IonButton color="tertiary" expand="block">
-        <IonIcon icon={pencil}/>Actualizar datos</IonButton>
-        </IonCardContent>
+          <div className={"ion-text-center"}>
+
+            <img src={dataUser.photo}  alt={"foto de perfil"} className={"img-profile"}/>
+
+          </div>
+            <IonCardContent>
+
+                <IonItemDivider>
+                  <IonCardSubtitle color={"primary"}>
+                    INFORMACIÓN DE CUENTA
+                  </IonCardSubtitle>
+                </IonItemDivider>
+
+              <IonList>
+                <IonItem>
+                  <IonLabel className="ion-text-wrap">
+                    <p>Nombre</p>
+                    <h2><strong>{dataUser.name}</strong></h2>
+                  </IonLabel>
+                  <IonIcon color={"secondary"} icon={pencilOutline} onClick={() => handleOpenModal()}/>
+                </IonItem>
+                <IonItem>
+                  <IonLabel className="ion-text-wrap">
+                    <p>Correo electrónico</p>
+                    <h2><strong>{dataUser.email} </strong></h2>
+                  </IonLabel>
+                </IonItem>
+              </IonList>
+
+              <IonItemDivider>
+                <IonCardSubtitle color={"primary"}>
+                  GESTIÓN DE CUENTA
+                </IonCardSubtitle>
+              </IonItemDivider>
+              <div className={"ion-text-center"}>
+                <IonButton
+                    expand={"block"}
+                    fill={"clear"}
+                    routerLink="/guide"
+                    color="secondary"
+                >
+                  Ver guia de usuario
+                </IonButton>
+              </div>
+            </IonCardContent>
       </IonCard>
         </>
       ):(<></>)}
 
-      <IonButton
-          routerLink="/guide"
-          color="secondary"
-          className="ion-activatable ripple-parent button"
+      <IonModal
+          isOpen={showFilterModal}
+          onDidDismiss={() => setShowFilterModal(false)}
+          swipeToClose={true}
+          cssClass={"myModal"}
       >
-        Ver guia de usuario
-        <IonRippleEffect/>
-      </IonButton>
+        <EditProfile user={dataUser} onClose={handleCloseModal}/>
+      </IonModal>
+
 
     </IonContent>
 

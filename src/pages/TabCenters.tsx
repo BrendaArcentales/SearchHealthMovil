@@ -3,15 +3,13 @@ import { IonHeader, IonPage, IonTitle, IonToolbar } from "@ionic/react";
 
 import "./TabCenters.css";
 import AllCenters from "../components/AllCenters";
+import Header from "../components/Header";
 
 const TabCenters: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Lista de centros</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+
+     <Header pageName={"Lista de centros"}/>
 
       <AllCenters />
     </IonPage>

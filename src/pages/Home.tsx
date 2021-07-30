@@ -85,10 +85,6 @@ const Home: React.FC = () => {
               <IonIcon icon={personCircleOutline} />
               <IonLabel>Perfil</IonLabel>
             </IonTabButton>
-            <IonTabButton>
-              <IonIcon onClick={onLogout} icon={logOut} />
-              <IonLabel>Cerrar Sesión</IonLabel>
-            </IonTabButton>
           </IonTabBar>
         </IonTabs>
       </IonReactRouter>

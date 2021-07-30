@@ -8,15 +8,12 @@ import {
 import "./TabUserProfile.css";
 import Favorites from "../components/Favorites";
 import React from "react";
+import Header from "../components/Header";
 
 const FavoriteCenters: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Lista de Favoritos</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+     <Header pageName={"Lista de favoritos"}/>
 
       <IonContent>
         <Favorites />
