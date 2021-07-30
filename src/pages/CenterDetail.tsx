@@ -28,6 +28,7 @@ import AuthProvider from "../services/AuthProvider";
 import { db } from "../firebase/firebaseConfig";
 import useFavorites from "../data/useFavorites";
 import { toast } from "../toast";
+import HeaderBack from "../components/HeaderBack";
 
 interface Medical
   extends RouteComponentProps<{
@@ -109,13 +110,7 @@ const CenterDetail: React.FC<Medical> = ({ match, history }) => {
 
   return (
     <IonPage>
-      <IonHeader translucent={true}>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton defaultHref="/centers" />
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
+     <HeaderBack pageName={"/centers"}/>
       <IonContent fullscreen>
         {dataCenter ? (
           <>

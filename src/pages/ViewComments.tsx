@@ -36,6 +36,7 @@ import { db } from "../firebase/firebaseConfig";
 import medicalCenters from "../data/services/medicalCenters";
 import useUser from "../data/useUser";
 import EditComment from "../components/EditComment";
+import HeaderBack from "../components/HeaderBack";
 
 interface Comment
   extends RouteComponentProps<{
@@ -44,7 +45,6 @@ interface Comment
 
   const ViewComments: React.FC <Comment>= ({match, history}) => {
     const [listComments] = useComments(match.params.id);
-    console.log("cargo lista comentarios", listComments);
     const [present] = useIonAlert();
     const [text, setText] = useState<string>();
     const idC=match.params.id;
@@ -62,28 +62,6 @@ interface Comment
       });
     };
 
-
-    const handleDelComment = async (id: any) => {
-      await db
-      .collection("medicalCenters")
-      .doc(idC)
-      .collection("comments")
-      .doc(id)
-      .delete();
-    };
-    const handleDeleteComment = (id: any) => {
-      present({
-        cssClass: "my-css",
-        message: "Desea eliminar este comentario",
-        buttons: [
-          { text: "Eliminar", handler: (d) => handleDelComment(id)},
-          "Cancelar",
-        ],
-        onDidDismiss: (e) => console.log("did dismiss"),
-      });
-    };
-
-
     const handleOpenModal = ( data : object )=>{
         setDataComment(data);
         setShowFilterModal(true)
@@ -93,13 +71,7 @@ interface Comment
     }
     return (
       <IonPage>
-          <IonHeader translucent={true}>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton defaultHref="/centers" />
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
+       <HeaderBack pageName={`/centers/centerDetail/${match.params.id}`} />
         <IonContent fullscreen>
                   {listComments.length > 0 ? (
             <IonList>
@@ -118,7 +90,6 @@ interface Comment
                         </IonLabel>
                         {dataUser.uid===x.uid ?(<>
                           <IonIcon color={"secondary"} icon={pencilOutline} onClick={() => handleOpenModal(x)}/>
-                          <IonIcon  color={"danger"} icon={trash} onClick={()=>handleDeleteComment(x.id)}/>
                           </>) :(<></>)}
                       </IonItem>
                   </>

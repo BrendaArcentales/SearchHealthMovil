@@ -1,12 +1,6 @@
 import {
   IonContent,
-  IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
-  IonLabel,
-  IonButtons,
-  IonBackButton,
 } from "@ionic/react";
 import "./TabUserProfile.css";
 
@@ -14,6 +8,7 @@ import React, {useEffect, useState} from "react";
 import { RouteComponentProps } from "react-router";
 import HomeContainer from "../components/Map/HomeContainer";
 import useCenter from "../data/useCenter";
+import HeaderBack from "../components/HeaderBack";
 
 interface Comment
   extends RouteComponentProps<{
@@ -35,15 +30,7 @@ const ViewMap: React.FC <Comment>= ({match, history}) => {
 
     return (
     <IonPage>
-      <IonHeader translucent={true}>
-        <IonToolbar>
-
-          <IonButtons slot="start">
-            <IonBackButton defaultHref="/centers" />
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
-
+        <HeaderBack pageName={`/centers/centerDetail/${match.params.id}`} />
       <IonContent>
           {
               checkValues ?
