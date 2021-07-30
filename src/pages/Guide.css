@@ -4,8 +4,11 @@ ion-slides ion-toolbar {
 }
 
 ion-slides .swiper-slide {
-    display: block;
+    display: block;;
 }
+ion-slides {
+    height: 98%;
+  }
 
 ion-slides .swiper-slide img {
     max-height: 100%;

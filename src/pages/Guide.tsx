@@ -14,12 +14,10 @@ const Guide: React.FC = () => {
         <IonPage>
             <IonContent scrollY={false} fullscreen={true}>
                 <div className="home-container gradient-1">
-                    <IonSlides>
+                    <IonSlides pager={true}>
                         <IonSlide>
                             <div className={"container"}>
                                 <img className="logo-size" src="assets/logo.jpeg"></img>
-
-
                                 <IonCardContent>
                                     <IonLabel>
                                         <p>Sistema que permite encontrar centros médicos de especialidades</p>
@@ -87,7 +85,7 @@ const Guide: React.FC = () => {
                                     </IonCardHeader>
                                 </IonCardContent>
                                 <IonLabel>
-                                    <p>Cada centro tiene una sección de Ver mapa donde podra ver la dirección del centro médico</p>
+                                    <p>Cada centro tiene una sección de "Ver mapa" donde podra ver la dirección del centro médico</p>
 
                                 </IonLabel>
                                 </div>
