@@ -40,7 +40,7 @@ const TabUserProfile: React.FC = () => {
 
   return (
     <IonPage>
-   <Header pageName={"Perfil de usuario"}/>
+   <Header pageName={"Perfil"}/>
     <IonContent>
     {dataUser!=null ?(
         <>

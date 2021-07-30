@@ -13,8 +13,7 @@ import Header from "../components/Header";
 const FavoriteCenters: React.FC = () => {
   return (
     <IonPage>
-     <Header pageName={"Lista de favoritos"}/>
-
+     <Header pageName={"Favoritos"}/>
       <IonContent>
         <Favorites />
       </IonContent>

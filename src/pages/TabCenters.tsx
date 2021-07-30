@@ -9,7 +9,7 @@ const TabCenters: React.FC = () => {
   return (
     <IonPage>
 
-     <Header pageName={"Lista de centros"}/>
+     <Header pageName={"Centros"}/>
 
       <AllCenters />
     </IonPage>
