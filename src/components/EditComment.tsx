@@ -22,7 +22,7 @@ import {
 import {arrowBackOutline, options, sendOutline} from "ionicons/icons";
 import React, {useEffect, useState} from "react";
 import {db} from "../firebase/firebaseConfig";
-import medicalCenters from "../data/services/medicalCenters";
+import medicalCenters from "../firebase/services/medicalCenters";
 
 const EditComment = (props: any) => {
 

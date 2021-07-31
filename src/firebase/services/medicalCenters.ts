@@ -1,4 +1,4 @@
-import { db } from "../../firebase/firebaseConfig";
+import { db } from "../firebaseConfig";
 
 let Centers;
 
@@ -20,5 +20,5 @@ export default Centers = {
       .doc(commentID)
       .delete();
   },
-  
+
 };

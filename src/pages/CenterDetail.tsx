@@ -23,10 +23,10 @@ import "./CenterDetail.css";
 import { RouteComponentProps } from "react-router";
 import { Link } from "react-router-dom";
 import { starOutline, star } from "ionicons/icons";
-import useCenter from "../data/useCenter";
+import useCenter from "../hooks/useCenter";
 import AuthProvider from "../services/AuthProvider";
 import { db } from "../firebase/firebaseConfig";
-import useFavorites from "../data/useFavorites";
+import useFavorites from "../hooks/useFavorites";
 import { toast } from "../toast";
 import HeaderBack from "../components/HeaderBack";
 

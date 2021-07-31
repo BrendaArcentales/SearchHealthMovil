@@ -12,7 +12,7 @@ import {
 } from "@ionic/react";
 import { Link } from "react-router-dom";
 import { addCircleOutline } from "ionicons/icons";
-import useMedicalCenters from "../data/useMedicalCenters";
+import useMedicalCenters from "../hooks/useMedicalCenters";
 
 interface ContainerProps {}
 

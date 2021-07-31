@@ -29,12 +29,12 @@ import {
 
   import React, { useEffect, useState } from "react";
   import { RouteComponentProps } from "react-router";
-import useComments from "../data/useComments";
+import useComments from "../hooks/useComments";
 import "./ViewComments.css";
 import { sendOutline,alertCircleOutline,trash, pencilOutline} from "ionicons/icons";
 import { db } from "../firebase/firebaseConfig";
-import medicalCenters from "../data/services/medicalCenters";
-import useUser from "../data/useUser";
+import medicalCenters from "../firebase/services/medicalCenters";
+import useUser from "../hooks/useUser";
 import EditComment from "../components/EditComment";
 import HeaderBack from "../components/HeaderBack";
 
