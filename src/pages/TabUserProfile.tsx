@@ -1,27 +1,18 @@
 import {
-  IonAvatar,
   IonButton,
   IonCard,
   IonCardContent,
-  IonCardHeader,
   IonCardSubtitle,
-  IonCardTitle,
   IonContent,
-  IonHeader,
   IonIcon, IonItem, IonItemDivider, IonLabel, IonList, IonModal,
   IonPage,
-  IonRippleEffect,
-  IonThumbnail,
-  IonTitle,
-  IonToolbar
 } from '@ionic/react';
-import {pencil, logIn, pencilOutline} from 'ionicons/icons';
-import useUser from '../data/useUser';
+import {pencilOutline} from 'ionicons/icons';
+import useUser from "../hooks/useUser";
 
 import './TabUserProfile.css';
 import React, {useState} from "react";
 import Header from "../components/Header";
-import EditComment from "../components/EditComment";
 import EditProfile from "../components/EditProfile";
 
 const TabUserProfile: React.FC = () => {
@@ -29,7 +20,6 @@ const TabUserProfile: React.FC = () => {
 
   console.log("datos usuario per", dataUser);
   const [showFilterModal, setShowFilterModal] = useState(false);
-
   const handleOpenModal = ( )=>{
     setShowFilterModal(true)
   }
@@ -44,15 +34,11 @@ const TabUserProfile: React.FC = () => {
     <IonContent>
     {dataUser!=null ?(
         <>
-
         <IonCard >
           <div className={"ion-text-center"}>
-
             <img src={dataUser.photo}  alt={"foto de perfil"} className={"img-profile"}/>
-
           </div>
             <IonCardContent>
-
                 <IonItemDivider>
                   <IonCardSubtitle color={"primary"}>
                     INFORMACIÓN DE CUENTA
@@ -103,7 +89,6 @@ const TabUserProfile: React.FC = () => {
       >
         <EditProfile user={dataUser} onClose={handleCloseModal}/>
       </IonModal>
-
 
     </IonContent>
 

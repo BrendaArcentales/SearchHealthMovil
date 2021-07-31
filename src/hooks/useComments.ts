@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import medicalCenters from "./services/medicalCenters";
+import medicalCenters from "../firebase/services/medicalCenters";
 
 const Comments: (id: any) => [any] = (id) => {
   const [dataComment, setDataComment] = useState<any>([]);

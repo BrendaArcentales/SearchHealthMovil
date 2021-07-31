@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import medicalCenters from "./services/medicalCenters";
+import medicalCenters from "../firebase/services/medicalCenters";
 
 const MedicalCenters = () => {
   const [listCenter, setListCenter] = useState<any>([]);

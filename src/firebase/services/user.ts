@@ -1,4 +1,4 @@
-import { db } from "../../firebase/firebaseConfig";
+import { db } from "../firebaseConfig";
 
 let Users;
 

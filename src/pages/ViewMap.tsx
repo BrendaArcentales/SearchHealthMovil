@@ -7,7 +7,7 @@ import "./TabUserProfile.css";
 import React, {useEffect, useState} from "react";
 import { RouteComponentProps } from "react-router";
 import HomeContainer from "../components/Map/HomeContainer";
-import useCenter from "../data/useCenter";
+import useCenter from "../hooks/useCenter";
 import HeaderBack from "../components/HeaderBack";
 
 interface Comment

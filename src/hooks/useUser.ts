@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import user from "./services/user";
+import user from "../firebase/services/user";
 import AuthProvider from "../services/AuthProvider";
 
 const User  = () => {

@@ -17,7 +17,7 @@ import {
   trash,
   arrowForwardCircleOutline,
 } from "ionicons/icons";
-import useFavorites from "../data/useFavorites";
+import useFavorites from "../hooks/useFavorites";
 import AuthProvider from "../services/AuthProvider";
 import { medicalCenter } from "../modelo/medicalCenters";
 import { db } from "../firebase/firebaseConfig";
