@@ -11,30 +11,41 @@ import {
   IonLabel,
 } from "@ionic/react";
 import "./Login.css";
-import { useState } from "react";
 import { Link } from "react-router-dom";
-
 import { toast } from "../toast";
 import React from "react";
 import AuthProvider from "../services/AuthProvider";
 import { useHistory } from "react-router";
+import translateMessage from "../firebase/translateMessage";
+import {object, string} from "yup";
+import {useForm} from "react-hook-form";
+import {yupResolver} from "@hookform/resolvers/yup";
+
+const validationSchema = object().shape({
+  email: string().required("Ingresa tu correo").email("Ingresa un correo electrónico válido"),
+  password: string()
+      .required("Ingresa tu clave")
+      .min(6, "La clave debe tener al menos 6 caracteres"),
+});
+
 const Login: React.FC = () => {
-  const [usermail, setUsermail] = useState("");
-  const [userpassword, setUserpassword] = useState("");
   const { login } = React.useContext(AuthProvider);
   const history = useHistory();
+  const {register, handleSubmit, formState: {errors}} = useForm({
+    resolver: yupResolver(validationSchema),
+  });
 
-  const onlogin = async () => {
-    if (usermail.trim() === "" || userpassword.trim() === "") {
-      return toast("Los campos son obligatorios", "danger");
+  const handleLogin = async (data: any) => {
+    try{
+      await login(data.email, data.password).then(
+          ()=>{
+            toast("Inicio de sesión exitoso", "success");
+            history.replace("/");
+          }
+      );
+    } catch (e) {
+      toast(translateMessage(e.code), "danger");
     }
-    const res = await login(usermail, userpassword);
-    if (!res) {
-      toast("La combinación de correo y contraseña es erronea", "danger");
-    } else {
-      history.replace("/");
-    }
-    console.log(`${res ? "Acceso concedido" : "Acceso denegado"}`);
   };
 
   return (
@@ -47,32 +58,46 @@ const Login: React.FC = () => {
               <img className="logo-size" src="assets/logo.jpeg"/>
             </div>
             <IonCardContent>
-              <IonItem>
-                <IonLabel position="floating">Email</IonLabel>
-                <IonInput
-                  type="text"
-                  clearInput
-                  onIonChange={(e: any) => setUsermail(e.target.value)}
-                />
-              </IonItem>
-              <IonItem>
-                <IonLabel position="floating">Contraseña</IonLabel>
-                <IonInput
-                  type="password"
-                  clearInput
-                  onIonChange={(e: any) => setUserpassword(e.target.value)}
-                />
-              </IonItem>
+              <form onSubmit={handleSubmit(handleLogin)}>
+                <IonItem>
+                  <IonLabel position="floating">Email</IonLabel>
+                  <IonInput
+                      {...register("email")}
+                      type="text"
+                      clearInput
+                  />
+
+                </IonItem>
+                <div className={"ion-text-center"}>
+                  <IonLabel color={"danger"}>{errors.email?.message}</IonLabel>
+                </div>
+
+                <IonItem>
+                  <IonLabel position="floating">Contraseña</IonLabel>
+                  <IonInput
+                      {...register("password")}
+                      type="password"
+                      clearInput
+                  />
+
+                </IonItem>
+                <div className={"ion-text-center"}>
+                  <IonLabel color={"danger"}>{errors.password?.message}</IonLabel>
+                </div>
+
+                <div className={"ion-text-center"}>
+                  <IonButton
+                      color="secondary"
+                      type={"submit"}
+                      className="ion-activatable ripple-parent button"
+                  >
+                    Iniciar Sesión
+                    <IonRippleEffect/>
+                  </IonButton>
+                </div>
+              </form>
 
               <div className="ion-text-center ">
-                <IonButton
-                  color="secondary"
-                  onClick={onlogin}
-                  className="ion-activatable ripple-parent button"
-                >
-                  Iniciar Sesión
-                  <IonRippleEffect></IonRippleEffect>
-                </IonButton>
                 <IonTitle size="small">
                   Aún no tienes cuenta?
                   <Link className="link" to="/register">
