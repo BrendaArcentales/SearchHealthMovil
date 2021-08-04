@@ -32,7 +32,7 @@ const validationSchema = object().shape({
 
 const Register: React.FC = () => {
     const {
-        register: RegisterUser,
+        registerUser,
     } = React.useContext(AuthProvider);
 
     const history = useHistory();
@@ -43,7 +43,7 @@ const Register: React.FC = () => {
 
     const onRegister = async (data: any) => {
         try {
-            await RegisterUser(data.email, data.password, data.name).then(
+            await registerUser(data.email, data.password, data.name).then(
                 () => {
                     toast("Su cuenta ha sido creada con exito", "success");
                     history.replace("/");
@@ -73,7 +73,6 @@ const Register: React.FC = () => {
                                         type="text"
                                         clearInput
                                     />
-
                                 </IonItem>
                                 <div className={"ion-text-center"}>
                                     <IonLabel color={"danger"}>{errors.name?.message}</IonLabel>
@@ -83,10 +82,9 @@ const Register: React.FC = () => {
                                     <IonLabel position="floating">Email</IonLabel>
                                     <IonInput
                                         {...register("email")}
-                                        type="text"
+                                        type="email"
                                         clearInput
                                     />
-
                                 </IonItem>
                                 <div className={"ion-text-center"}>
                                     <IonLabel color={"danger"}>{errors.email?.message}</IonLabel>
