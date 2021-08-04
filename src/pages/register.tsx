@@ -67,7 +67,7 @@ const Register: React.FC = () => {
 
                             <form onSubmit={handleSubmit(onRegister)}>
                                 <IonItem>
-                                    <IonLabel position="floating">Name</IonLabel>
+                                    <IonLabel position="floating">Nombre</IonLabel>
                                     <IonInput
                                         {...register("name")}
                                         type="text"
