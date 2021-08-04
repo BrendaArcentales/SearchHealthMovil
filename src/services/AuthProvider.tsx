@@ -40,9 +40,9 @@ export const AuthProvider: React.FC = ({ children }) => {
     return Promise.resolve(true);
   };
 
-  const register = async (email: string, password: string, displayName: string) => {
+  const registerUser = async (email: string, password: string, displayName: string) => {
 
-      try {
+
         let authUser = await auth.createUserWithEmailAndPassword(
           email,
           password
@@ -61,16 +61,13 @@ export const AuthProvider: React.FC = ({ children }) => {
           });
           return Promise.resolve(true);
         } else {
+          setAuthValues({
+            user: null,
+            authenticated: false,
+          });
           return Promise.resolve(false);
         }
-      } catch (e) {
-        setAuthValues({
-          user: null,
-          authenticated: false,
-          errors: { ...e },
-        });
-        return Promise.resolve(false);
-      }
+
     ;
   };
 
@@ -109,7 +106,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     initialize,
     login,
     logout,
-    register,
+    registerUser,
     sendPasswordResetEmail,
   };
 
