@@ -5,7 +5,6 @@ import Register from "./pages/register";
 import Recover from "./pages/recover";
 import Guide from "./pages/Guide";
 
-
 const UnauthenticatedApp = () => {
   return (
     <IonRouterOutlet id="main">
@@ -18,7 +17,6 @@ const UnauthenticatedApp = () => {
       <Route exact path="/recover">
         <Recover />
       </Route>
-
         <Route exact path="/guide">
             <Guide />
         </Route>

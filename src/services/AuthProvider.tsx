@@ -12,23 +12,23 @@ export const AuthProvider: React.FC = ({ children }) => {
     initialized: false,
   });
 
-  const login = (email: string, password: string) => {
-    return new Promise(async (resolve) => {
+  const login = async (email: string, password: string) => {
+
       let authUser = await auth.signInWithEmailAndPassword(email, password);
       if (authUser) {
         setAuthValues({
           authenticated: true,
           user: { ...authUser },
         });
-        resolve(true);
+        return Promise.resolve(true);
       } else {
         setAuthValues({
           authenticated: false,
           user: null,
         });
-        resolve(false);
+        return Promise.resolve(false);
       }
-    });
+
   };
 
   const logout = async () => {
@@ -40,8 +40,8 @@ export const AuthProvider: React.FC = ({ children }) => {
     return Promise.resolve(true);
   };
 
-  const register = (email: string, password: string, displayName: string) => {
-    return new Promise(async (resolve) => {
+  const register = async (email: string, password: string, displayName: string) => {
+
       try {
         let authUser = await auth.createUserWithEmailAndPassword(
           email,
@@ -59,9 +59,9 @@ export const AuthProvider: React.FC = ({ children }) => {
             uid: uidValue,
             photo: "https://firebasestorage.googleapis.com/v0/b/search-health-ce2ca.appspot.com/o/users%2Fblank.png?alt=media&token=011f9092-4da2-4255-94aa-8daf997e0f1a",
           });
-          resolve(true);
+          return Promise.resolve(true);
         } else {
-          resolve(false);
+          return Promise.resolve(false);
         }
       } catch (e) {
         setAuthValues({
@@ -69,9 +69,9 @@ export const AuthProvider: React.FC = ({ children }) => {
           authenticated: false,
           errors: { ...e },
         });
-        resolve(false);
+        return Promise.resolve(false);
       }
-    });
+    ;
   };
 
   const sendPasswordResetEmail = async (email: string) => {
