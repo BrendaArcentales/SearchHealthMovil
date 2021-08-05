@@ -12,6 +12,9 @@ export default Centers = {
   getCommentsByIDCenter: (id: string) => {
     return db.collection("medicalCenters").doc(id).collection("comments");
   },
+  getCommentByIDCenter: (id: string, commentID: string) => {
+    return db.collection("medicalCenters").doc(id).collection("comments").doc(commentID);
+  },
   deleteCommentByIDCenter: (id: string, commentID: string) => {
     return db
       .collection("medicalCenters")

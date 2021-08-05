@@ -7,7 +7,6 @@ import {
   IonRouterOutlet,
   IonApp,
 } from "@ionic/react";
-import { logOut } from "ionicons/icons";
 import AuthProvider from "../services/AuthProvider";
 import { listCircleOutline, personCircleOutline, star } from "ionicons/icons";
 import TabCenters from "./TabCenters";
@@ -22,6 +21,7 @@ import FavoriteCenters from "./FavoriteCenters";
 import ViewMap from "./ViewMap";
 import ViewComments from "./ViewComments";
 import Guide from "./Guide";
+
 const Home: React.FC = () => {
   const { logout } = React.useContext(AuthProvider);
   const history = useHistory();
@@ -30,6 +30,7 @@ const Home: React.FC = () => {
     await logout();
     history.replace("/login");
   }
+
   return (
     <IonApp>
       <IonReactRouter>
@@ -44,10 +45,7 @@ const Home: React.FC = () => {
             <Route exact path="/favorites">
               <FavoriteCenters />
             </Route>
-            <Route
-                exact
-                path="/guide"
-            >
+            <Route exact path="/guide">
               <Guide />
             </Route>
             <Route

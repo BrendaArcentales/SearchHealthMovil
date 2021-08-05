@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import medicalCenters from "../firebase/services/medicalCenters";
 
 const Center: (id: any) => [any] = (id) => {

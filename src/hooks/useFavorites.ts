@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { medicalCenter } from "../modelo/medicalCenters";
 import user from "../firebase/services/user";
 
 const Favorites: (id: any) => [any] = (id) => {

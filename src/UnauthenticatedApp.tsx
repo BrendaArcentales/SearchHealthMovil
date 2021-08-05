@@ -17,9 +17,9 @@ const UnauthenticatedApp = () => {
       <Route exact path="/recover">
         <Recover />
       </Route>
-        <Route exact path="/guide">
-            <Guide />
-        </Route>
+      <Route exact path="/guide">
+        <Guide />
+      </Route>
       <Redirect to={"/guide"} />
     </IonRouterOutlet>
   );

@@ -10,17 +10,15 @@ import {
   IonThumbnail,
   useIonAlert,
   IonRow,
-  IonCol,
+  IonCol, IonText, IonRippleEffect, IonButton,
 } from "@ionic/react";
-import { Link } from "react-router-dom";
 import {
-  trash,
-  arrowForwardCircleOutline,
+  trash, alertCircleOutline,
 } from "ionicons/icons";
 import useFavorites from "../hooks/useFavorites";
 import AuthProvider from "../services/AuthProvider";
 import { medicalCenter } from "../modelo/medicalCenters";
-import { db } from "../firebase/firebaseConfig";
+import user from "../firebase/services/user";
 
 interface ContainerProps {}
 
@@ -31,12 +29,7 @@ const Favorites: React.FC<ContainerProps> = () => {
   const [present] = useIonAlert();
 
   const handleEditFavorite = async (id: any) => {
-    await db
-      .collection("users")
-      .doc(authValues.user.uid)
-      .collection("favorites")
-      .doc(id)
-      .delete();
+    await user.getFavoriteCenterByUser(authValues.user.uid, id).delete();
   };
 
   const handleDeleteFavorite = (id: any) => {
@@ -57,51 +50,72 @@ const Favorites: React.FC<ContainerProps> = () => {
         onIonChange={(e) => setSearchText(e.detail.value!)}
       />
       <IonList>
-        {listFavorites.map((x: medicalCenter) => {
+        {
+          listFavorites.length > 0 ?
+
+          listFavorites.map((x: medicalCenter) => {
           return (
-            <IonItem key={x.id}>
-              <IonThumbnail slot="start">
-                <img src={x.photo} />
-              </IonThumbnail>
-              <IonGrid>
-                <IonRow>
-                  <IonCol size="6">
-                    <IonLabel>
-                      <h2>{x.name}</h2>
-                      <h3>Sector: {x.sector}</h3>
-                      <p>Tipo:{x.type}</p>
-                    </IonLabel>
-                  </IonCol>
-                  <IonCol size="3">
-                    <IonLabel>
-                      <IonIcon
-                        onClick={() => handleDeleteFavorite(x.id)}
-                        slot="end"
-                        size="large"
-                        color={"danger"}
-                        icon={trash}
-                      />
-                    </IonLabel>
-                  </IonCol>
-                  <IonCol size="3">
-                    <IonLabel>
-                      <Link to={`/centers/centerDetail/${x.id}`}>
+              <>
+                <IonGrid>
+                  <IonRow >
+
+                    <IonCol size="11">
+                      <IonItem key={x.id} lines="full" detail={true} routerLink={`/centers/centerDetail/${x.id}`} >
+                        <IonThumbnail slot="start">
+                          <img src={x.photo} />
+                        </IonThumbnail>
+                        <IonLabel className={"ion-text-wrap"}>
+                          <h2>{x.name} </h2>
+                          <h4 className={"ion-text-end"}>{x.sector}</h4>
+                          <p>{x.type}</p>
+                        </IonLabel>
+                      </IonItem>
+                    </IonCol>
+
+                    <IonCol size="1" className="ion-align-self-center">
+                      <IonLabel >
                         <IonIcon
-                          slot="end"
-                          size="large"
-                          color={"secondary"}
-                          icon={arrowForwardCircleOutline}
+                            onClick={() => handleDeleteFavorite(x.id)}
+                            slot="start"
+                            size="large"
+                            color={"danger"}
+                            icon={trash}
                         />
-                      </Link>
-                    </IonLabel>
+                      </IonLabel>
+                    </IonCol>
+                  </IonRow>
+                </IonGrid>
+          </>
+          );
+        })
+
+        :
+              <IonGrid className={"ion-padding-top"}>
+                <IonRow>
+                  <IonCol size="12">
+                    <div className={"ion-text-center"}>
+                      <IonIcon color="warning" icon={alertCircleOutline}/>
+                      <IonText  color="warning"> No tienes centros médicos en tu lista de Favoritos</IonText>
+                    </div>
                   </IonCol>
+
+                  <div className={"ion-text-center ion-padding"}>
+                    <img src="assets/favorites2.svg" className="img-size"/>
+                    <IonButton
+                        routerLink="/"
+                        color="secondary"
+                        className="ion-activatable ripple-parent button "
+                    >
+                      Busquemos uno
+                      <IonRippleEffect/>
+                    </IonButton>
+                  </div>
                 </IonRow>
               </IonGrid>
-            </IonItem>
-          );
-        })}
+        }
       </IonList>
     </IonContent>
   );
 };
+
 export default Favorites;

@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {
   IonContent,
-  IonHeader,
   IonPage,
-  IonToolbar,
   IonCard,
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
   IonCardContent,
-  IonButtons,
   IonChip,
-  IonBackButton,
   IonItem,
   IonLabel,
   IonList,
@@ -110,7 +106,7 @@ const CenterDetail: React.FC<Medical> = ({ match, history }) => {
 
   return (
     <IonPage>
-     <HeaderBack pageName={"/centers"}/>
+      <HeaderBack pageName={"/centers"} />
       <IonContent fullscreen>
         {dataCenter ? (
           <>
@@ -144,11 +140,17 @@ const CenterDetail: React.FC<Medical> = ({ match, history }) => {
                 )}
 
                 <div className="ion-text-center">
-                  <Link className="color-link" to={`/centers/centerDetail/${dataCenter.id}/map`}>
+                  <Link
+                    className="color-link"
+                    to={`/centers/centerDetail/${dataCenter.id}/map`}
+                  >
                     Ver mapa
                   </Link>
                   <IonLabel> - </IonLabel>
-                  <Link className="color-link" to={`/centers/centerDetail/${dataCenter.id}/comments`}>
+                  <Link
+                    className="color-link"
+                    to={`/centers/centerDetail/${dataCenter.id}/comments`}
+                  >
                     Ver comentarios
                   </Link>
                 </div>
