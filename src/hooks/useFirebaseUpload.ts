@@ -54,7 +54,7 @@ function FirebaseFileUploadApi(): [
       if (_value instanceof File) {
         let fName = `${new Date().getTime()}-${_value.name}`;
         // setting the firebase properties for the file upload
-        let ref = storageRef.child("users/" + dataUser.uid );
+        let ref = storageRef.child("users/" + dataUser.uid + fName );
         return ref.put(_value);
       } else {
         let v = _value as DataAsDataUrl;

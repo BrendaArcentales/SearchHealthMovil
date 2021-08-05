@@ -9,4 +9,8 @@ export default Users = {
   getFavoritesUser: (id: string) => {
     return db.collection("users").doc(id).collection("favorites");
   },
+  getFavoriteCenterByUser: (id: string, favoriteID: string) => {
+    return db.collection("users").doc(id).collection("favorites").doc(favoriteID);
+  },
+
 };
