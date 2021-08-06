@@ -18,7 +18,7 @@ import {
 import "./CenterDetail.css";
 import { RouteComponentProps } from "react-router";
 import { Link } from "react-router-dom";
-import { starOutline, star } from "ionicons/icons";
+import { starOutline, star, logoFacebook,logoInstagram,globeOutline} from "ionicons/icons";
 import useCenter from "../hooks/useCenter";
 import AuthProvider from "../services/AuthProvider";
 import { db } from "../firebase/firebaseConfig";
@@ -203,6 +203,63 @@ const CenterDetail: React.FC<Medical> = ({ match, history }) => {
                           Telefono : {dataCenter.contacts.telephone}
                         </IonLabel>
                       </IonItem>
+                    </>
+                  ) : (
+                    <IonContent />
+                  )}
+                </IonList>
+              </IonCardContent>
+            </IonCard>
+            <IonCard>
+              <IonCardHeader>
+                <IonCardSubtitle>Redes Sociales</IonCardSubtitle>
+              </IonCardHeader>
+              <IonCardContent>
+                <IonList>
+                  {dataCenter.social_media ? (
+                    <>
+                        {dataCenter.social_media.facebook ? (<>
+                          <IonItem>
+                            <IonLabel class="ion-text-wrap">
+                              <IonIcon
+                              slot="start"
+                              size="large"
+                              color={"secondary"}
+                              icon={logoFacebook}
+                              />
+                                <a target={"_blank"} href={dataCenter.social_media.facebook}>{dataCenter.social_media.facebook}</a>
+                            </IonLabel>
+                           </IonItem>
+                        </>)
+                        : (<></>)}
+                        {dataCenter.social_media.instagram ? (<>
+                          <IonItem>
+                            <IonLabel class="ion-text-wrap">
+                              <IonIcon
+                              slot="start"
+                              size="large"
+                              color={"secondary"}
+                              icon={logoInstagram}
+                              />
+                            <a target={"_blank"} href={dataCenter.social_media.instagram}>{dataCenter.social_media.instagram}</a>
+                            </IonLabel>
+                          </IonItem>
+                        </>)
+                        : (<></>)}
+                        {dataCenter.social_media.website ? (<>
+                          <IonItem>
+                            <IonLabel class="ion-text-wrap">
+                              <IonIcon
+                              slot="start"
+                              size="large"
+                              color={"secondary"}
+                              icon={globeOutline}
+                              />
+                              <a target={"_blank"} href={dataCenter.social_media.website}>{dataCenter.social_media.website}</a>
+                            </IonLabel>
+                          </IonItem>
+                      </>)
+                      : (<></>)}
                     </>
                   ) : (
                     <IonContent />

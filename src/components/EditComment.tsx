@@ -168,7 +168,7 @@ const EditComment = (props: any) => {
                   <IonButton
                     color="secondary"
                     onClick={() => handleDeleteComment()}
-                    className="ion-activatable ripple-parent button"
+                    className="ion-activatable"
                   >
                     Eliminar comentario
                     <IonRippleEffect />
