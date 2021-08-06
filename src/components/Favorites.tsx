@@ -59,7 +59,7 @@ const Favorites: React.FC<ContainerProps> = () => {
                 <IonGrid>
                   <IonRow >
 
-                    <IonCol size="11">
+                    <IonCol size="10.4">
                       <IonItem key={x.id} lines="full" detail={true} routerLink={`/centers/centerDetail/${x.id}`} >
                         <IonThumbnail slot="start">
                           <img src={x.photo} />
@@ -72,7 +72,7 @@ const Favorites: React.FC<ContainerProps> = () => {
                       </IonItem>
                     </IonCol>
 
-                    <IonCol size="1" className="ion-align-self-center">
+                    <IonCol size="1.6" className="ion-align-self-center">
                       <IonLabel >
                         <IonIcon
                             onClick={() => handleDeleteFavorite(x.id)}

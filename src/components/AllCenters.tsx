@@ -75,7 +75,7 @@ const AllCenters: React.FC<ContainerProps> = () => {
                 <img src={center.photo} />
               </IonThumbnail>
               <IonLabel className={"ion-text-wrap"}>
-                <h1>{center.name} </h1>
+                <h2>{center.name} </h2>
                 <h4 className={"ion-text-end"}>{center.sector}</h4>
                 <p>{center.type}</p>
               </IonLabel>

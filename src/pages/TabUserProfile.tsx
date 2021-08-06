@@ -75,20 +75,18 @@ const TabUserProfile: React.FC = () => {
                     </IonLabel>
                   </IonItem>
                 </IonList>
-
-                <IonItemDivider>
-                  <IonCardSubtitle color={"primary"}>
-                    GESTIÓN DE CUENTA
-                  </IonCardSubtitle>
-                </IonItemDivider>
                 <div className={"ion-text-center"}>
+                  <IonLabel className="ion-text-wrap">
+                      <p>Esta sección contiene una guia que permitira al usuario entender el funcionamiento y otros detalles sobre la
+                        apliación
+                      </p>
+                    </IonLabel>
                   <IonButton
-                    expand={"block"}
                     fill={"clear"}
                     routerLink="/guide"
                     color="secondary"
                   >
-                    Ver guia de usuario
+                    Guia
                   </IonButton>
                 </div>
               </IonCardContent>
