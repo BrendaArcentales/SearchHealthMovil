@@ -23,14 +23,6 @@ import ViewComments from "./ViewComments";
 import Guide from "./Guide";
 
 const Home: React.FC = () => {
-  const { logout } = React.useContext(AuthProvider);
-  const history = useHistory();
-
-  async function onLogout() {
-    await logout();
-    history.replace("/login");
-  }
-
   return (
     <IonApp>
       <IonReactRouter>
