@@ -10,11 +10,12 @@ import {
   IonThumbnail,
   useIonAlert,
   IonRow,
-  IonCol, IonText, IonRippleEffect, IonButton,
+  IonCol,
+  IonText,
+  IonRippleEffect,
+  IonButton,
 } from "@ionic/react";
-import {
-  trash, alertCircleOutline,
-} from "ionicons/icons";
+import { trash, alertCircleOutline } from "ionicons/icons";
 import useFavorites from "../hooks/useFavorites";
 import AuthProvider from "../services/AuthProvider";
 import { medicalCenter } from "../modelo/medicalCenters";
@@ -50,17 +51,18 @@ const Favorites: React.FC<ContainerProps> = () => {
         onIonChange={(e) => setSearchText(e.detail.value!)}
       />
       <IonList>
-        {
-          listFavorites.length > 0 ?
-
+        {listFavorites.length > 0 ? (
           listFavorites.map((x: medicalCenter) => {
-          return (
+            return (
               <>
-                <IonGrid>
-                  <IonRow >
-
+                <IonGrid key={x.id + "Center"}>
+                  <IonRow>
                     <IonCol size="10.4">
-                      <IonItem key={x.id} lines="full" detail={true} routerLink={`/centers/centerDetail/${x.id}`} >
+                      <IonItem
+                        lines="full"
+                        detail={true}
+                        routerLink={`/centers/centerDetail/${x.id}`}
+                      >
                         <IonThumbnail slot="start">
                           <img src={x.photo} />
                         </IonThumbnail>
@@ -73,46 +75,48 @@ const Favorites: React.FC<ContainerProps> = () => {
                     </IonCol>
 
                     <IonCol size="1.6" className="ion-align-self-center">
-                      <IonLabel >
+                      <IonLabel>
                         <IonIcon
-                            onClick={() => handleDeleteFavorite(x.id)}
-                            slot="start"
-                            size="large"
-                            color={"danger"}
-                            icon={trash}
+                          onClick={() => handleDeleteFavorite(x.id)}
+                          slot="start"
+                          size="large"
+                          color={"danger"}
+                          icon={trash}
                         />
                       </IonLabel>
                     </IonCol>
                   </IonRow>
                 </IonGrid>
-          </>
-          );
-        })
+              </>
+            );
+          })
+        ) : (
+          <IonGrid className={"ion-padding-top"}>
+            <IonRow>
+              <IonCol size="12">
+                <div className={"ion-text-center"}>
+                  <IonIcon color="warning" icon={alertCircleOutline} />
+                  <IonText color="warning">
+                    {" "}
+                    No tienes centros médicos en tu lista de Favoritos
+                  </IonText>
+                </div>
+              </IonCol>
 
-        :
-              <IonGrid className={"ion-padding-top"}>
-                <IonRow>
-                  <IonCol size="12">
-                    <div className={"ion-text-center"}>
-                      <IonIcon color="warning" icon={alertCircleOutline}/>
-                      <IonText  color="warning"> No tienes centros médicos en tu lista de Favoritos</IonText>
-                    </div>
-                  </IonCol>
-
-                  <div className={"ion-text-center ion-padding"}>
-                    <img src="assets/favorites2.svg" className="img-size"/>
-                    <IonButton
-                        routerLink="/"
-                        color="secondary"
-                        className="ion-activatable ripple-parent button "
-                    >
-                      Busquemos uno
-                      <IonRippleEffect/>
-                    </IonButton>
-                  </div>
-                </IonRow>
-              </IonGrid>
-        }
+              <div className={"ion-text-center ion-padding"}>
+                <img src="assets/favorites2.svg" className="img-size" />
+                <IonButton
+                  routerLink="/"
+                  color="secondary"
+                  className="ion-activatable ripple-parent button "
+                >
+                  Busquemos uno
+                  <IonRippleEffect />
+                </IonButton>
+              </div>
+            </IonRow>
+          </IonGrid>
+        )}
       </IonList>
     </IonContent>
   );

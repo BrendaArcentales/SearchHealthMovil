@@ -12,8 +12,12 @@ import {
   IonSlides,
 } from "@ionic/react";
 import "./Guide.css";
+import AuthProvider from "../services/AuthProvider";
+import { auth } from "../firebase/firebaseConfig";
 
 const Guide: React.FC = () => {
+  const { authValues } = React.useContext(AuthProvider);
+
   return (
     <IonPage>
       <IonContent scrollY={false} fullscreen={true}>
@@ -30,14 +34,25 @@ const Guide: React.FC = () => {
                     </p>
                   </IonLabel>
                 </IonCardContent>
-                <IonButton
-                  routerLink="/login"
-                  color="secondary"
-                  className="ion-activatable ripple-parent button"
-                >
-                  Omitir
-                  <IonRippleEffect />
-                </IonButton>
+                {!authValues.authenticated ? (
+                  <IonButton
+                    routerLink="/login"
+                    color="secondary"
+                    className="ion-activatable ripple-parent button"
+                  >
+                    Omitir
+                    <IonRippleEffect />
+                  </IonButton>
+                ) : (
+                  <IonButton
+                    routerLink="/"
+                    color="secondary"
+                    className="ion-activatable ripple-parent button"
+                  >
+                    Omitir
+                    <IonRippleEffect />
+                  </IonButton>
+                )}
               </div>
             </IonSlide>
 

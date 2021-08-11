@@ -13,15 +13,16 @@ import {
   IonPage,
 } from "@ionic/react";
 import { pencilOutline } from "ionicons/icons";
-import useUser from "../hooks/useUser";
 
 import "./TabUserProfile.css";
 import React, { useState } from "react";
 import Header from "../components/Header";
 import EditProfile from "../components/EditProfile";
+import AuthProvider from "../services/AuthProvider";
 
 const TabUserProfile: React.FC = () => {
-  const [dataUser] = useUser();
+  const { authValues } = React.useContext(AuthProvider);
+  const dataUser = authValues.user;
 
   const [showFilterModal, setShowFilterModal] = useState(false);
   const handleOpenModal = () => {
@@ -77,10 +78,12 @@ const TabUserProfile: React.FC = () => {
                 </IonList>
                 <div className={"ion-text-center"}>
                   <IonLabel className="ion-text-wrap">
-                      <p>Esta sección contiene una guia que permitira al usuario entender el funcionamiento y otros detalles sobre la
-                        apliación
-                      </p>
-                    </IonLabel>
+                    <p>
+                      Esta sección contiene una guia que permitira al usuario
+                      entender el funcionamiento y otros detalles sobre la
+                      apliación
+                    </p>
+                  </IonLabel>
                   <IonButton
                     fill={"clear"}
                     routerLink="/guide"

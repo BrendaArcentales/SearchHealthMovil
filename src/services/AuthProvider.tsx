@@ -13,22 +13,21 @@ export const AuthProvider: React.FC = ({ children }) => {
   });
 
   const login = async (email: string, password: string) => {
-
-      let authUser = await auth.signInWithEmailAndPassword(email, password);
-      if (authUser) {
-        setAuthValues({
-          authenticated: true,
-          user: { ...authUser },
-        });
-        return Promise.resolve(true);
-      } else {
-        setAuthValues({
-          authenticated: false,
-          user: null,
-        });
-        return Promise.resolve(false);
-      }
-
+    let authUser = await auth.signInWithEmailAndPassword(email, password);
+    if (authUser) {
+      setAuthValues({
+        authenticated: true,
+        user: { ...authUser },
+      });
+      await initialize();
+      return Promise.resolve(true);
+    } else {
+      setAuthValues({
+        authenticated: false,
+        user: null,
+      });
+      return Promise.resolve(false);
+    }
   };
 
   const logout = async () => {
@@ -40,36 +39,35 @@ export const AuthProvider: React.FC = ({ children }) => {
     return Promise.resolve(true);
   };
 
-  const registerUser = async (email: string, password: string, displayName: string) => {
-
-
-        let authUser = await auth.createUserWithEmailAndPassword(
-          email,
-          password
-        );
-        if (authUser) {
-          setAuthValues({
-            authenticated: true,
-            user: { ...authUser },
-          });
-          const uidValue = authUser.user?.uid;
-          await db.collection("users").doc(uidValue).set({
-            email: email,
-            name: displayName,
-            uid: uidValue,
-            photo: "https://firebasestorage.googleapis.com/v0/b/search-health-ce2ca.appspot.com/o/users%2Fblank.png?alt=media&token=011f9092-4da2-4255-94aa-8daf997e0f1a",
-            role: "Usuario"
-          });
-          return Promise.resolve(true);
-        } else {
-          setAuthValues({
-            user: null,
-            authenticated: false,
-          });
-          return Promise.resolve(false);
-        }
-
-    ;
+  const registerUser = async (
+    email: string,
+    password: string,
+    displayName: string
+  ) => {
+    let authUser = await auth.createUserWithEmailAndPassword(email, password);
+    if (authUser) {
+      setAuthValues({
+        authenticated: true,
+        user: { ...authUser },
+      });
+      const uidValue = authUser.user?.uid;
+      await db.collection("users").doc(uidValue).set({
+        email: email,
+        name: displayName,
+        uid: uidValue,
+        photo:
+          "https://firebasestorage.googleapis.com/v0/b/search-health-ce2ca.appspot.com/o/users%2Fblank.png?alt=media&token=011f9092-4da2-4255-94aa-8daf997e0f1a",
+        role: "Usuario",
+      });
+      await initialize();
+      return Promise.resolve(true);
+    } else {
+      setAuthValues({
+        user: null,
+        authenticated: false,
+      });
+      return Promise.resolve(false);
+    }
   };
 
   const sendPasswordResetEmail = async (email: string) => {
@@ -81,16 +79,22 @@ export const AuthProvider: React.FC = ({ children }) => {
   //initialize firebase when app starts
   const initialize = () => {
     return new Promise((resolve) => {
-      let unsub = auth.onAuthStateChanged(async (authUser: object | null) => {
+      let unsub = auth.onAuthStateChanged(async (authUser: any | null) => {
         if (authUser) {
-          setAuthValues({
-            authenticated: true,
-            user: authUser,
-            userInfo: null,
-            errors: null,
-            initialized: true,
-          });
-          resolve(true);
+          await db
+            .collection("users")
+            .doc(authUser.uid)
+            .onSnapshot((querysSnapshot) => {
+              setAuthValues({
+                authenticated: true,
+                user: { ...querysSnapshot.data() },
+                userInfo: null,
+                errors: null,
+                initialized: true,
+              });
+
+              resolve(true);
+            });
         } else {
           setAuthValues({
             initialized: true,
