@@ -1,19 +1,15 @@
-import { IonContent, IonPage } from "@ionic/react";
+import { IonPage } from "@ionic/react";
 import "./TabUserProfile.css";
 
 import React, { useEffect, useState } from "react";
-import { RouteComponentProps } from "react-router";
 import HomeContainer from "../components/Map/HomeContainer";
 import useCenter from "../hooks/useCenter";
+import { useParams } from "react-router-dom";
 import HeaderBack from "../components/HeaderBack";
 
-interface Comment
-  extends RouteComponentProps<{
-    id: string;
-  }> {}
-
-const ViewMap: React.FC<Comment> = ({ match, history }) => {
-  const [dataCenter] = useCenter(match.params.id);
+const ViewMap: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const [dataCenter] = useCenter(id);
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const [checkValues, setCheckValues] = useState(false);
@@ -27,14 +23,12 @@ const ViewMap: React.FC<Comment> = ({ match, history }) => {
 
   return (
     <IonPage>
-      <HeaderBack pageName={`/centers/centerDetail/${match.params.id}`} />
-      <IonContent>
-        {checkValues ? (
-          <HomeContainer>{{ lat: latitude, lng: longitude }}</HomeContainer>
-        ) : (
-          <div>Cargando</div>
-        )}
-      </IonContent>
+      <HeaderBack word={"Regresar"} />
+      {checkValues ? (
+        <HomeContainer>{{ lat: latitude, lng: longitude }}</HomeContainer>
+      ) : (
+        <div>Cargando</div>
+      )}
     </IonPage>
   );
 };

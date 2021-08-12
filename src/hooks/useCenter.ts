@@ -9,7 +9,7 @@ const Center: (id: any) => [any] = (id) => {
       setDataCenter({ id: res.id, ...res.data() });
     };
     getlistCenter();
-  }, []);
+  }, [id]);
 
   return [dataCenter];
 };

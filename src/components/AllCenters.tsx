@@ -69,7 +69,7 @@ const AllCenters: React.FC<ContainerProps> = () => {
               key={center.id}
               lines="full"
               detail={true}
-              routerLink={`/centers/centerDetail/${center.id}`}
+              routerLink={`/centerDetail/${center.id}`}
             >
               <IonThumbnail slot="start">
                 <img src={center.photo} />

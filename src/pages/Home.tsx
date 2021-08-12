@@ -7,7 +7,6 @@ import {
   IonRouterOutlet,
   IonApp,
 } from "@ionic/react";
-import AuthProvider from "../services/AuthProvider";
 import { listCircleOutline, personCircleOutline, star } from "ionicons/icons";
 import TabCenters from "./TabCenters";
 import TabUserProfile from "./TabUserProfile";
@@ -15,12 +14,13 @@ import CenterDetail from "./CenterDetail";
 import { Redirect, Route } from "react-router-dom";
 import "./Home.css";
 import React from "react";
-import { useHistory } from "react-router";
 import { IonReactRouter } from "@ionic/react-router";
 import FavoriteCenters from "./FavoriteCenters";
 import ViewMap from "./ViewMap";
 import ViewComments from "./ViewComments";
 import Guide from "./Guide";
+import EditComment from "../components/EditComment";
+import EditProfile from "../components/EditProfile";
 
 const Home: React.FC = () => {
   return (
@@ -28,11 +28,17 @@ const Home: React.FC = () => {
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
+            <Route exact path="/">
+              <Redirect to={"/centers"} />
+            </Route>
             <Route exact path="/centers">
               <TabCenters />
             </Route>
-            <Route exact path="/user">
-              <TabUserProfile />
+            <Route exact path="/centerDetail/:id">
+              <CenterDetail />
+            </Route>
+            <Route exact path="/comments/:id">
+              <ViewComments />
             </Route>
             <Route exact path="/favorites">
               <FavoriteCenters />
@@ -40,26 +46,17 @@ const Home: React.FC = () => {
             <Route exact path="/guide">
               <Guide />
             </Route>
-            <Route
-              exact
-              path="/centers/centerDetail/:id"
-              component={CenterDetail}
-            />
-            <Route
-              exact
-              path="/centers/centerDetail/:id/map"
-              component={ViewMap}
-            />
-            <Route
-              exact
-              path="/centers/centerDetail/:id/comments"
-              component={ViewComments}
-            />
-            <Route exact path="/">
-              <Redirect to="/centers" />
+            <Route exact path="/user">
+              <TabUserProfile />
             </Route>
-            <Route exact path="/login">
-              <Redirect to="/centers" />
+            <Route exact path="/map/:id">
+              <ViewMap />
+            </Route>
+            <Route exact path="/editProfile">
+              <EditProfile />
+            </Route>
+            <Route exact path="/newcomment/:data/:id">
+              <EditComment />
             </Route>
           </IonRouterOutlet>
           <IonTabBar slot="bottom">

@@ -4,9 +4,6 @@ import {
   IonCard,
   IonTextarea,
   IonButton,
-  IonHeader,
-  IonToolbar,
-  IonButtons,
   IonPage,
   IonContent,
   IonCardHeader,
@@ -16,14 +13,22 @@ import {
   IonCardSubtitle,
   IonRippleEffect,
 } from "@ionic/react";
-import { arrowBackOutline, sendOutline } from "ionicons/icons";
+import { sendOutline } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
 import medicalCenters from "../firebase/services/medicalCenters";
 import { Rating } from "react-simple-star-rating";
 import moment from "moment";
 import useUser from "../hooks/useUser";
+import { useParams } from "react-router-dom";
+import useCommentUser from "../hooks/useCommentUser";
+import { useHistory } from "react-router";
+import HeaderBack from "./HeaderBack";
 
-const EditComment = (props: any) => {
+const EditComment: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const { data } = useParams<{ data: string }>();
+  const [dataComment] = useCommentUser(id, data);
+  const history = useHistory();
   const [text, setText] = useState<string>("");
   const [validate, setValidate] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(0);
@@ -31,21 +36,26 @@ const EditComment = (props: any) => {
   const [present] = useIonAlert();
 
   useEffect(() => {
-    if (Object.keys(props.comment).length !== 0) {
-      setText(props.comment.comment);
-      setRating(props.comment.score);
-      setValidate(true);
+    if (dataComment) {
+      if (dataComment.id != "null") {
+        setText(dataComment.comment);
+        setRating(dataComment.score);
+        setValidate(true);
+      } else {
+        setRating(1);
+        setValidate(false);
+      }
     } else {
       setRating(1);
       setValidate(false);
     }
-  }, [props]);
+  }, [dataComment]);
 
   const handleCreateComment = async () => {
     const today = new Date();
     const date = moment(today).format("DD/MM/YY");
     await medicalCenters
-      .getCommentsByIDCenter(props.idC)
+      .getCommentsByIDCenter(id)
       .add({
         comment: text,
         score: rating,
@@ -56,7 +66,7 @@ const EditComment = (props: any) => {
         date: date,
       })
       .then(() => {
-        props.onClose();
+        history.goBack();
       });
   };
 
@@ -64,7 +74,7 @@ const EditComment = (props: any) => {
     const today = new Date();
     const date = moment(today).format("DD/MM/YY");
     await medicalCenters
-      .getCommentByIDCenter(props.idC, props.comment.id)
+      .getCommentByIDCenter(id, dataComment.id)
       .update({
         comment: text,
         score: rating,
@@ -73,13 +83,13 @@ const EditComment = (props: any) => {
         date: date,
       })
       .then(() => {
-        props.onClose();
+        history.goBack();
       });
   };
 
-  const handleDelComment = async (id: any) => {
-    await medicalCenters.deleteCommentByIDCenter(props.idC, id).then(() => {
-      props.onClose();
+  const handleDelComment = async (idComment: any) => {
+    await medicalCenters.deleteCommentByIDCenter(id, idComment).then(() => {
+      history.goBack();
     });
   };
   const handleDeleteComment = () => {
@@ -89,7 +99,7 @@ const EditComment = (props: any) => {
       buttons: [
         {
           text: "Eliminar",
-          handler: (d) => handleDelComment(props.comment.id),
+          handler: (d) => handleDelComment(dataComment.id),
         },
         "Cancelar",
       ],
@@ -104,16 +114,7 @@ const EditComment = (props: any) => {
   return (
     <>
       <IonPage>
-        <IonHeader translucent={true}>
-          <IonToolbar>
-            <IonButtons slot="start">
-              <IonButton size="small" color="primary" onClick={props.onClose}>
-                <IonIcon slot="start" icon={arrowBackOutline} />
-                Cancelar
-              </IonButton>
-            </IonButtons>
-          </IonToolbar>
-        </IonHeader>
+        <HeaderBack word={"Cancelar"} />
         <IonContent>
           <IonCardHeader>
             <IonCardTitle>
@@ -144,7 +145,7 @@ const EditComment = (props: any) => {
               <div>
                 <IonTextarea
                   placeholder="Ingrese su comentario"
-                  defaultValue={props.comment.comment}
+                  defaultValue={dataComment.comment}
                   value={text}
                   onIonChange={(e) => setText(e.detail.value!)}
                   clearOnEdit
@@ -153,7 +154,19 @@ const EditComment = (props: any) => {
               </div>
             </IonCardContent>
           </IonCard>
-          {validate ? (
+          {!validate ? (
+            <>
+              <div className={"ion-text-center"}>
+                <IonItem
+                  color="primary"
+                  disabled={text == ""}
+                  onClick={handleCreateComment}
+                >
+                  Publicar comentario <IonIcon slot="end" icon={sendOutline} />
+                </IonItem>
+              </div>
+            </>
+          ) : (
             <>
               <IonItem
                 lines="none"
@@ -174,18 +187,6 @@ const EditComment = (props: any) => {
                     <IonRippleEffect />
                   </IonButton>
                 </div>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className={"ion-text-center"}>
-                <IonItem
-                  color="primary"
-                  disabled={text == ""}
-                  onClick={handleCreateComment}
-                >
-                  Publicar comentario <IonIcon slot="end" icon={sendOutline} />
-                </IonItem>
               </div>
             </>
           )}

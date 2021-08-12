@@ -1,5 +1,5 @@
 import { Redirect, Route } from "react-router-dom";
-import { IonRouterOutlet } from "@ionic/react";
+import { IonReactRouter } from "@ionic/react-router";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import Recover from "./pages/recover";
@@ -7,7 +7,7 @@ import Guide from "./pages/Guide";
 
 const UnauthenticatedApp = () => {
   return (
-    <IonRouterOutlet id="main">
+    <IonReactRouter>
       <Route exact path="/login">
         <Login />
       </Route>
@@ -21,7 +21,7 @@ const UnauthenticatedApp = () => {
         <Guide />
       </Route>
       <Redirect to={"/guide"} />
-    </IonRouterOutlet>
+    </IonReactRouter>
   );
 };
 

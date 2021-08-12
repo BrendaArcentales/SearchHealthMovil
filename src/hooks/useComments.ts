@@ -17,7 +17,7 @@ const Comments: (id: any) => [any] = (id) => {
         });
         setDataComment(list);
       });
-  }, []);
+  }, [id]);
 
   return [dataComment];
 };

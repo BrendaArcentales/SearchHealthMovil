@@ -9,27 +9,23 @@ import {
   IonItemDivider,
   IonLabel,
   IonList,
-  IonModal,
   IonPage,
 } from "@ionic/react";
 import { pencilOutline } from "ionicons/icons";
 
 import "./TabUserProfile.css";
-import React, { useState } from "react";
+import React from "react";
 import Header from "../components/Header";
-import EditProfile from "../components/EditProfile";
 import AuthProvider from "../services/AuthProvider";
+import { useHistory } from "react-router-dom";
 
 const TabUserProfile: React.FC = () => {
   const { authValues } = React.useContext(AuthProvider);
   const dataUser = authValues.user;
+  const history = useHistory();
 
-  const [showFilterModal, setShowFilterModal] = useState(false);
   const handleOpenModal = () => {
-    setShowFilterModal(true);
-  };
-  const handleCloseModal = () => {
-    setShowFilterModal(false);
+    history.push("/editProfile");
   };
 
   return (
@@ -98,15 +94,6 @@ const TabUserProfile: React.FC = () => {
         ) : (
           <></>
         )}
-
-        <IonModal
-          isOpen={showFilterModal}
-          onDidDismiss={() => setShowFilterModal(false)}
-          swipeToClose={true}
-          cssClass={"myModal"}
-        >
-          <EditProfile user={dataUser} onClose={handleCloseModal} />
-        </IonModal>
       </IonContent>
     </IonPage>
   );
