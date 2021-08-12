@@ -1,18 +1,23 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
-import { IonRouterOutlet } from "@ionic/react";
+import { IonReactRouter } from "@ionic/react-router";
 
 import Home from "./pages/Home";
 import Guide from "./pages/Guide";
+import CenterDetail from "./pages/CenterDetail";
+import ViewMap from "./pages/ViewMap";
+import ViewComments from "./pages/ViewComments";
+import EditComment from "./components/EditComment";
+import EditProfile from "./components/EditProfile";
 const AuthenticatedApp = () => {
   return (
-    <IonRouterOutlet>
+    <IonReactRouter>
       <Route exact path="/">
         <Home />
       </Route>
-        <Route exact path="/guide">
-            <Guide />
-        </Route>
+      <Route exact path="/guide">
+        <Guide />
+      </Route>
       <Route exact path="/centers">
         <Home />
       </Route>
@@ -22,17 +27,23 @@ const AuthenticatedApp = () => {
       <Route exact path="/favorites">
         <Home />
       </Route>
-      <Route exact path="/centers/centerDetail/:id">
+      <Route exact path="/centerDetail/:id">
         <Home />
       </Route>
-      <Route exact path="/centers/centerDetail/:id/map">
+      <Route exact path="/map/:id">
         <Home />
       </Route>
-      <Route exact path="/centers/centerDetail/:id/comments">
+      <Route exact path="/comments/:id">
         <Home />
       </Route>
-      <Redirect to={"/"}/>
-    </IonRouterOutlet>
+      <Route exact path="/editProfile">
+        <Home />
+      </Route>
+      <Route exact path="/newcomment/:data/:id">
+        <Home />
+      </Route>
+      <Redirect to={"/"} />
+    </IonReactRouter>
   );
 };
 

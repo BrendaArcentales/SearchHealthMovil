@@ -6,10 +6,9 @@ const User = () => {
   const { authValues } = React.useContext(AuthProvider);
   const [dataUser, setDataUser] = useState<any>([]);
 
-  console.log("data", authValues);
   useEffect(() => {
     const getlistCenter = async () => {
-      await user.getUser(authValues.uid).onSnapshot((querySnapshot) => {
+      await user.getUser(authValues.user.uid).onSnapshot((querySnapshot) => {
         setDataUser({ id: querySnapshot.id, ...querySnapshot.data() });
       });
     };

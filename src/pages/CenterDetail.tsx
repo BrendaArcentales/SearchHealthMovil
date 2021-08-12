@@ -5,7 +5,6 @@ import {
   IonCard,
   IonCardHeader,
   IonCardSubtitle,
-  IonCardTitle,
   IonCardContent,
   IonChip,
   IonItem,
@@ -13,150 +12,32 @@ import {
   IonList,
   IonSpinner,
   IonIcon,
-  useIonAlert,
 } from "@ionic/react";
 import "./CenterDetail.css";
-import { RouteComponentProps } from "react-router";
-import { Link } from "react-router-dom";
-import { starOutline, star, logoFacebook,logoInstagram,globeOutline} from "ionicons/icons";
+import { logoFacebook, logoInstagram, globeOutline } from "ionicons/icons";
 import useCenter from "../hooks/useCenter";
-import AuthProvider from "../services/AuthProvider";
-import { db } from "../firebase/firebaseConfig";
-import useFavorites from "../hooks/useFavorites";
-import { toast } from "../toast";
+import CardCenterMedical from "../components/CardCenterMedical";
+import { useParams } from "react-router-dom";
 import HeaderBack from "../components/HeaderBack";
 
-interface Medical
-  extends RouteComponentProps<{
-    id: string;
-  }> {}
-
-const CenterDetail: React.FC<Medical> = ({ match, history }) => {
-  const [dataCenter] = useCenter(match.params.id);
+const CenterDetail: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const [dataCenter] = useCenter(id);
   const [days, setDays] = useState<string>("");
-  const [favorite, setFavorite] = useState<boolean>(false);
-  const { authValues } = React.useContext(AuthProvider);
-  const [listFavorites] = useFavorites(authValues.user.uid);
-  const [present] = useIonAlert();
 
   useEffect(() => {
     if (dataCenter) {
       setDays(dataCenter.days);
     }
-  }, [dataCenter]);
-
-  useEffect(() => {
-    if (dataCenter && listFavorites) {
-      listFavorites.filter((item: any) => {
-        if (item.id == dataCenter.id) {
-          setFavorite(true);
-        }
-      });
-    }
-  }, [listFavorites, dataCenter]);
-
-  const handleSaveFavorite = async () => {
-    await db
-      .collection("users")
-      .doc(authValues.user.uid)
-      .collection("favorites")
-      .doc(dataCenter.id)
-      .set({ ...dataCenter })
-      .then(() => {
-        setFavorite(true);
-        toast("Agregado a lista de favoritos", "success");
-      });
-  };
-
-  const handleEditFavorite = async () => {
-    await db
-      .collection("users")
-      .doc(authValues.user.uid)
-      .collection("favorites")
-      .doc(dataCenter.id)
-      .delete()
-      .then(() => {
-        setFavorite(false);
-        toast("Se ha quitado de lista de favoritos", "success");
-      });
-  };
-
-  const handleAddFavorite = () => {
-    present({
-      cssClass: "my-css",
-      message: "Desea añadir a favoritos este centro médico",
-      buttons: [
-        { text: "Añadir", handler: (d) => handleSaveFavorite() },
-        "Cancelar",
-      ],
-      onDidDismiss: (e) => console.log("did dismiss"),
-    });
-  };
-  const handleDeleteFavorite = () => {
-    present({
-      cssClass: "my-css",
-      message: "Desea eliminar este centro médico de su lista de favoritos",
-      buttons: [
-        { text: "Eliminar", handler: (d) => handleEditFavorite() },
-        "Cancelar",
-      ],
-      onDidDismiss: (e) => console.log("did dismiss"),
-    });
-  };
+  }, [dataCenter, id]);
 
   return (
     <IonPage>
-      <HeaderBack pageName={"/centers"} />
+      <HeaderBack word={"Regresar"} />
       <IonContent fullscreen>
+        <CardCenterMedical center={dataCenter} />
         {dataCenter ? (
           <>
-            <IonCard>
-              <img className="img-style" src={dataCenter.photo} />
-              <IonCardHeader>
-                <IonCardSubtitle>{dataCenter.sector}</IonCardSubtitle>
-                <IonCardTitle>{dataCenter.name}</IonCardTitle>
-                <IonCardSubtitle>{dataCenter.type}</IonCardSubtitle>
-              </IonCardHeader>
-              <IonCardContent>
-                {favorite ? (
-                  <div>
-                    <IonIcon
-                      onClick={() => handleDeleteFavorite()}
-                      slot="end"
-                      size="large"
-                      color={"secondary"}
-                      icon={star}
-                    />
-                  </div>
-                ) : (
-                  <div>
-                    <IonIcon
-                      onClick={() => handleAddFavorite()}
-                      slot="end"
-                      size="large"
-                      icon={starOutline}
-                    />
-                  </div>
-                )}
-
-                <div className="ion-text-center">
-                  <Link
-                    className="color-link"
-                    to={`/centers/centerDetail/${dataCenter.id}/map`}
-                  >
-                    Ver mapa
-                  </Link>
-                  <IonLabel> - </IonLabel>
-                  <Link
-                    className="color-link"
-                    to={`/centers/centerDetail/${dataCenter.id}/comments`}
-                  >
-                    Ver comentarios
-                  </Link>
-                </div>
-              </IonCardContent>
-            </IonCard>
-
             <IonCard>
               <IonCardHeader>
                 <IonCardSubtitle>Horario de Atención</IonCardSubtitle>
@@ -218,48 +99,72 @@ const CenterDetail: React.FC<Medical> = ({ match, history }) => {
                 <IonList>
                   {dataCenter.social_media ? (
                     <>
-                        {dataCenter.social_media.facebook ? (<>
+                      {dataCenter.social_media.facebook ? (
+                        <>
                           <IonItem>
                             <IonLabel class="ion-text-wrap">
                               <IonIcon
-                              slot="start"
-                              size="large"
-                              color={"secondary"}
-                              icon={logoFacebook}
+                                slot="start"
+                                size="large"
+                                color={"secondary"}
+                                icon={logoFacebook}
                               />
-                                <a target={"_blank"} href={dataCenter.social_media.facebook}>{dataCenter.social_media.facebook}</a>
-                            </IonLabel>
-                           </IonItem>
-                        </>)
-                        : (<></>)}
-                        {dataCenter.social_media.instagram ? (<>
-                          <IonItem>
-                            <IonLabel class="ion-text-wrap">
-                              <IonIcon
-                              slot="start"
-                              size="large"
-                              color={"secondary"}
-                              icon={logoInstagram}
-                              />
-                            <a target={"_blank"} href={dataCenter.social_media.instagram}>{dataCenter.social_media.instagram}</a>
+                              <a
+                                target={"_blank"}
+                                href={dataCenter.social_media.facebook}
+                              >
+                                {dataCenter.social_media.facebook}
+                              </a>
                             </IonLabel>
                           </IonItem>
-                        </>)
-                        : (<></>)}
-                        {dataCenter.social_media.website ? (<>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                      {dataCenter.social_media.instagram ? (
+                        <>
                           <IonItem>
                             <IonLabel class="ion-text-wrap">
                               <IonIcon
-                              slot="start"
-                              size="large"
-                              color={"secondary"}
-                              icon={globeOutline}
+                                slot="start"
+                                size="large"
+                                color={"secondary"}
+                                icon={logoInstagram}
                               />
-                              <a target={"_blank"} href={dataCenter.social_media.website}>{dataCenter.social_media.website}</a>
+                              <a
+                                target={"_blank"}
+                                href={dataCenter.social_media.instagram}
+                              >
+                                {dataCenter.social_media.instagram}
+                              </a>
                             </IonLabel>
                           </IonItem>
-                      </>)
-                      : (<></>)}
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                      {dataCenter.social_media.website ? (
+                        <>
+                          <IonItem>
+                            <IonLabel class="ion-text-wrap">
+                              <IonIcon
+                                slot="start"
+                                size="large"
+                                color={"secondary"}
+                                icon={globeOutline}
+                              />
+                              <a
+                                target={"_blank"}
+                                href={dataCenter.social_media.website}
+                              >
+                                {dataCenter.social_media.website}
+                              </a>
+                            </IonLabel>
+                          </IonItem>
+                        </>
+                      ) : (
+                        <></>
+                      )}
                     </>
                   ) : (
                     <IonContent />
@@ -288,7 +193,7 @@ const CenterDetail: React.FC<Medical> = ({ match, history }) => {
                         slot="start"
                         color="secondary"
                         name="crescent"
-                      ></IonSpinner>
+                      />
                       <IonLabel color="secondary">Cargando</IonLabel>
                     </IonItem>
                   )}
@@ -300,11 +205,7 @@ const CenterDetail: React.FC<Medical> = ({ match, history }) => {
           <>
             <div className="ion-text-center">
               <IonItem>
-                <IonSpinner
-                  slot="start"
-                  color="secondary"
-                  name="crescent"
-                ></IonSpinner>
+                <IonSpinner slot="start" color="secondary" name="crescent" />
                 <IonLabel color="secondary">Cargando</IonLabel>
               </IonItem>
             </div>

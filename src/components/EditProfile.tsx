@@ -3,25 +3,27 @@ import {
   IonItem,
   IonCard,
   IonTextarea,
-  IonButton,
   IonPage,
   IonContent,
-  IonHeader,
-  IonToolbar,
-  IonButtons,
   IonCardHeader,
   IonCardContent,
   IonLabel,
   IonAvatar,
   IonCardSubtitle,
 } from "@ionic/react";
-import { arrowBackOutline, camera, sendOutline } from "ionicons/icons";
+import { camera, sendOutline } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
 import user from "../firebase/services/user";
 import { usePhotoGallery } from "../hooks/usePhotoGallery";
 import useFirebaseUpload from "../hooks/useFirebaseUpload";
+import AuthProvider from "../services/AuthProvider";
+import { useHistory } from "react-router-dom";
+import HeaderBack from "./HeaderBack";
 
-const EditProfile = (props: any) => {
+const EditProfile = () => {
+  const { authValues } = React.useContext(AuthProvider);
+  const dataUser = authValues.user;
+  const history = useHistory();
   const { photos, takePhoto } = usePhotoGallery();
   const [text, setText] = useState<string>();
   const [data, setData] = useState({});
@@ -33,10 +35,10 @@ const EditProfile = (props: any) => {
   ] = useFirebaseUpload();
 
   useEffect(() => {
-    if (props.user) {
-      setText(props.user.name);
+    if (dataUser) {
+      setText(dataUser.name);
     }
-  }, []);
+  }, [dataUser]);
 
   useEffect(() => {
     if (dataResponse) {
@@ -46,7 +48,6 @@ const EditProfile = (props: any) => {
 
   useEffect(() => {
     photos.map((photo, index) => {
-      // @ts-ignore
       setData({
         dataUrl: photo.data,
         format: photo.format,
@@ -56,10 +57,10 @@ const EditProfile = (props: any) => {
 
   const updateNameProfile = async () => {
     await user
-      .getUser(props.user.uid)
+      .getUser(dataUser.uid)
       .update({ name: text })
       .then(() => {
-        props.onClose();
+        history.goBack();
       });
   };
 
@@ -67,10 +68,10 @@ const EditProfile = (props: any) => {
     // @ts-ignore
     let URL = dataResponse.downloadUrl;
     await user
-      .getUser(props.user.uid)
+      .getUser(dataUser.uid)
       .update({ photo: URL })
       .then(() => {
-        props.onClose();
+        history.goBack();
       });
   };
 
@@ -81,16 +82,7 @@ const EditProfile = (props: any) => {
   return (
     <>
       <IonPage>
-        <IonHeader translucent={true}>
-          <IonToolbar>
-            <IonButtons slot="start">
-              <IonButton size={"small"} color="primary" onClick={props.onClose}>
-                <IonIcon slot="start" icon={arrowBackOutline} />
-                Cancelar
-              </IonButton>
-            </IonButtons>
-          </IonToolbar>
-        </IonHeader>
+        <HeaderBack word={"Cancelar"} />
         <IonContent>
           <IonCard>
             <IonCardHeader>
@@ -101,7 +93,7 @@ const EditProfile = (props: any) => {
               <IonItem lines={"none"}>
                 <IonTextarea
                   placeholder="Ingrese su nombre de usuario"
-                  defaultValue={props.user.name}
+                  defaultValue={dataUser.name}
                   value={text}
                   onIonChange={(e) => setText(e.detail.value!)}
                 />
@@ -127,7 +119,7 @@ const EditProfile = (props: any) => {
                 <IonLabel>
                   Foto actual:
                   <IonAvatar>
-                    <img src={props.user.photo} />
+                    <img src={dataUser.photo} />
                   </IonAvatar>
                 </IonLabel>
                 <IonIcon

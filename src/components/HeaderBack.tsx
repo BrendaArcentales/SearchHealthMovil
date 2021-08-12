@@ -1,20 +1,14 @@
 import React from "react";
 import { IonHeader, IonToolbar, IonButtons, IonBackButton } from "@ionic/react";
-
 type HeaderProps = {
-  pageName: string;
+  word: string;
 };
-
-const HeaderBack: React.FC<HeaderProps> = ({ pageName }: HeaderProps) => {
+const HeaderBack: React.FC<HeaderProps> = ({ word }: HeaderProps) => {
   return (
     <IonHeader translucent={true}>
       <IonToolbar>
         <IonButtons slot="start">
-          <IonBackButton
-            text="Regresar"
-            color="primary"
-            defaultHref={pageName}
-          />
+          <IonBackButton text={word} color="primary" defaultHref={"/"} />
         </IonButtons>
       </IonToolbar>
     </IonHeader>

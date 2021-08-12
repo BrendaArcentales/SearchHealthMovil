@@ -21,9 +21,7 @@ import AuthProvider from "../services/AuthProvider";
 import { medicalCenter } from "../modelo/medicalCenters";
 import user from "../firebase/services/user";
 
-interface ContainerProps {}
-
-const Favorites: React.FC<ContainerProps> = () => {
+const Favorites: React.FC = () => {
   const { authValues } = React.useContext(AuthProvider);
   const [listFavorites] = useFavorites(authValues.user.uid);
   const [searchText, setSearchText] = useState("");
@@ -54,40 +52,38 @@ const Favorites: React.FC<ContainerProps> = () => {
         {listFavorites.length > 0 ? (
           listFavorites.map((x: medicalCenter) => {
             return (
-              <>
-                <IonGrid key={x.id + "Center"}>
-                  <IonRow>
-                    <IonCol size="10.4">
-                      <IonItem
-                        lines="full"
-                        detail={true}
-                        routerLink={`/centers/centerDetail/${x.id}`}
-                      >
-                        <IonThumbnail slot="start">
-                          <img src={x.photo} />
-                        </IonThumbnail>
-                        <IonLabel className={"ion-text-wrap"}>
-                          <h2>{x.name} </h2>
-                          <h4 className={"ion-text-end"}>{x.sector}</h4>
-                          <p>{x.type}</p>
-                        </IonLabel>
-                      </IonItem>
-                    </IonCol>
-
-                    <IonCol size="1.6" className="ion-align-self-center">
-                      <IonLabel>
-                        <IonIcon
-                          onClick={() => handleDeleteFavorite(x.id)}
-                          slot="start"
-                          size="large"
-                          color={"danger"}
-                          icon={trash}
-                        />
+              <IonGrid key={x.id + "Center"}>
+                <IonRow>
+                  <IonCol size="10.4">
+                    <IonItem
+                      lines="full"
+                      detail={true}
+                      routerLink={`/centerDetail/${x.id}`}
+                    >
+                      <IonThumbnail slot="start">
+                        <img src={x.photo} />
+                      </IonThumbnail>
+                      <IonLabel className={"ion-text-wrap"}>
+                        <h2>{x.name} </h2>
+                        <h4 className={"ion-text-end"}>{x.sector}</h4>
+                        <p>{x.type}</p>
                       </IonLabel>
-                    </IonCol>
-                  </IonRow>
-                </IonGrid>
-              </>
+                    </IonItem>
+                  </IonCol>
+
+                  <IonCol size="1.6" className="ion-align-self-center">
+                    <IonLabel>
+                      <IonIcon
+                        onClick={() => handleDeleteFavorite(x.id)}
+                        slot="start"
+                        size="large"
+                        color={"danger"}
+                        icon={trash}
+                      />
+                    </IonLabel>
+                  </IonCol>
+                </IonRow>
+              </IonGrid>
             );
           })
         ) : (
