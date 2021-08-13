@@ -54,14 +54,14 @@ function FirebaseFileUploadApi(): [
       if (_value instanceof File) {
         let fName = `${new Date().getTime()}-${_value.name}`;
         // setting the firebase properties for the file upload
-        let ref = storageRef.child("users/" + dataUser.uid + fName );
+        let ref = storageRef.child("users/" + dataUser.uid + fName);
         return ref.put(_value);
       } else {
         let v = _value as DataAsDataUrl;
         let fName = `${new Date().getTime()}.${v.format}`;
         // setting the firebase properties for the file upload
-        let ref = storageRef.child("users/" + dataUser.uid );
-        return ref.putString(v.dataUrl, "data_url");
+        let ref = storageRef.child("users/" + dataUser.uid + fName);
+        return ref.putString(v.dataUrl, "base64");
       }
     };
 
@@ -81,12 +81,12 @@ function FirebaseFileUploadApi(): [
         // application UI
         uploadTask.on(
           firebase.storage.TaskEvent.STATE_CHANGED,
-          _progress => {
+          (_progress) => {
             var value = _progress.bytesTransferred / _progress.totalBytes;
             console.log("Upload is " + value * 100 + "% done");
             setProgress({ value });
           },
-          _error => {
+          (_error) => {
             setIsLoading(false);
             setIsError(_error);
           },
@@ -100,7 +100,7 @@ function FirebaseFileUploadApi(): [
             // set the data when upload has completed
             setDataResponse({
               metaData: uploadTask.snapshot.metadata,
-              downloadUrl
+              downloadUrl,
             });
 
             // reset progress
@@ -119,7 +119,7 @@ function FirebaseFileUploadApi(): [
   return [
     { dataResponse, isLoading, isError, progress },
     setFileData,
-    clearError
+    clearError,
   ];
 }
 
