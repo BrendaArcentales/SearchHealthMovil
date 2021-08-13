@@ -12,6 +12,7 @@ import {
   useIonAlert,
   IonCardSubtitle,
   IonRippleEffect,
+  IonLoading,
 } from "@ionic/react";
 import { sendOutline } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
@@ -34,6 +35,7 @@ const EditComment: React.FC = () => {
   const [rating, setRating] = useState<number>(0);
   const [dataUser] = useUser();
   const [present] = useIonAlert();
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (dataComment) {
@@ -54,6 +56,7 @@ const EditComment: React.FC = () => {
   const handleCreateComment = async () => {
     const today = new Date();
     const date = moment(today).format("DD/MM/YY");
+    setLoading(true);
     await medicalCenters
       .getCommentsByIDCenter(id)
       .add({
@@ -66,13 +69,16 @@ const EditComment: React.FC = () => {
         date: date,
       })
       .then(() => {
+        setLoading(false);
         history.goBack();
       });
+    setLoading(false);
   };
 
   const updateComment = async () => {
     const today = new Date();
     const date = moment(today).format("DD/MM/YY");
+    setLoading(true);
     await medicalCenters
       .getCommentByIDCenter(id, dataComment.id)
       .update({
@@ -83,8 +89,10 @@ const EditComment: React.FC = () => {
         date: date,
       })
       .then(() => {
+        setLoading(false);
         history.goBack();
       });
+    setLoading(false);
   };
 
   const handleDelComment = async (idComment: any) => {
@@ -113,6 +121,11 @@ const EditComment: React.FC = () => {
 
   return (
     <>
+      <IonLoading
+        isOpen={loading}
+        message={"Subiendo comentario"}
+        onDidDismiss={() => setLoading(false)}
+      />
       <IonPage>
         <HeaderBack word={"Cancelar"} />
         <IonContent>

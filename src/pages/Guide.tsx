@@ -13,7 +13,6 @@ import {
 } from "@ionic/react";
 import "./Guide.css";
 import AuthProvider from "../services/AuthProvider";
-import { auth } from "../firebase/firebaseConfig";
 
 const Guide: React.FC = () => {
   const { authValues } = React.useContext(AuthProvider);
@@ -67,8 +66,8 @@ const Guide: React.FC = () => {
                   <IonLabel>
                     <p>
                       En la aplicación podrá visualizar una lista de centros
-                      médicos, podrá buscar por nombres de los centros médics o
-                      filtrar por el sector donde se encutren estos
+                      médicos, podrá buscar por nombres de los centros médicos o
+                      filtrar por el sector donde se encuentren estos
                     </p>
                   </IonLabel>
                 </IonCardContent>

@@ -10,6 +10,7 @@ import {
   IonLabel,
   IonAvatar,
   IonCardSubtitle,
+  IonLoading,
 } from "@ionic/react";
 import { camera, sendOutline } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
@@ -19,6 +20,7 @@ import useFirebaseUpload from "../hooks/useFirebaseUpload";
 import AuthProvider from "../services/AuthProvider";
 import { useHistory } from "react-router-dom";
 import HeaderBack from "./HeaderBack";
+import { toast } from "../toast";
 
 const EditProfile = () => {
   const { authValues } = React.useContext(AuthProvider);
@@ -27,6 +29,7 @@ const EditProfile = () => {
   const { photos, takePhoto } = usePhotoGallery();
   const [text, setText] = useState<string>();
   const [data, setData] = useState({});
+  const [loading, setLoading] = useState<boolean>(false);
 
   const [
     { dataResponse, isLoading, isError, progress },
@@ -56,23 +59,36 @@ const EditProfile = () => {
   }, [photos]);
 
   const updateNameProfile = async () => {
+    setLoading(true);
     await user
       .getUser(dataUser.uid)
       .update({ name: text })
       .then(() => {
+        setLoading(false);
         history.goBack();
       });
+    setLoading(false);
   };
 
   const updatePhotoProfile = async () => {
     // @ts-ignore
     let URL = dataResponse.downloadUrl;
-    await user
-      .getUser(dataUser.uid)
-      .update({ photo: URL })
-      .then(() => {
-        history.goBack();
-      });
+    try {
+      setLoading(true);
+      await user
+        .getUser(dataUser.uid)
+        .update({ photo: URL })
+        .then(() => {
+          setLoading(false);
+          history.goBack();
+        });
+    } catch (e) {
+      setLoading(false);
+      toast(
+        "Ha ocurrido un error al cargar el archivo vuelva a intentarlo más tarde",
+        "warning"
+      );
+    }
   };
 
   const savePhoto = () => {
@@ -81,6 +97,11 @@ const EditProfile = () => {
 
   return (
     <>
+      <IonLoading
+        isOpen={loading}
+        message={"Actualizando datos"}
+        onDidDismiss={() => setLoading(false)}
+      />
       <IonPage>
         <HeaderBack word={"Cancelar"} />
         <IonContent>
