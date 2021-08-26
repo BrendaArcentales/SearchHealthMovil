@@ -27,6 +27,7 @@ const AllCenters: React.FC<ContainerProps> = () => {
     <IonContent fullscreen>
       <IonSearchbar
         value={searchText}
+        placeholder={"Buscar por nombre o especialidad"}
         onIonChange={(e) => setSearchText(e.detail.value!)}
       />
       <IonList lines="none">
@@ -61,6 +62,14 @@ const AllCenters: React.FC<ContainerProps> = () => {
             } else if (
               val.name.toLowerCase().includes(searchText.toLowerCase())
             ) {
+              return val;
+            }else if (
+                val.specialties.find((item: string)=>{
+                  if(item.toLowerCase().includes(searchText.toLowerCase())){
+                    return true;
+                  }
+                })
+            ){
               return val;
             }
           })
