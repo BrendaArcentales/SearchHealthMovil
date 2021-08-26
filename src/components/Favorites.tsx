@@ -46,11 +46,28 @@ const Favorites: React.FC = () => {
     <IonContent fullscreen>
       <IonSearchbar
         value={searchText}
+        placeholder={"Buscar por nombre o especialidad"}
         onIonChange={(e) => setSearchText(e.detail.value!)}
       />
       <IonList>
         {listFavorites.length > 0 ? (
-          listFavorites.map((x: medicalCenter) => {
+          listFavorites.filter((val: any) => {
+            if (searchText == "") {
+              return val;
+            } else if (
+                val.name.toLowerCase().includes(searchText.toLowerCase())
+            ) {
+              return val;
+            }else if (
+                val.specialties.find((item: string)=>{
+                  if(item.toLowerCase().includes(searchText.toLowerCase())){
+                    return true;
+                  }
+                })
+            ){
+              return val;
+            }
+          }).map((x: medicalCenter) => {
             return (
               <IonGrid key={x.id + "Center"}>
                 <IonRow>
@@ -93,7 +110,6 @@ const Favorites: React.FC = () => {
                 <div className={"ion-text-center"}>
                   <IonIcon color="warning" icon={alertCircleOutline} />
                   <IonText color="warning">
-                    {" "}
                     No tienes centros médicos en tu lista de Favoritos
                   </IonText>
                 </div>

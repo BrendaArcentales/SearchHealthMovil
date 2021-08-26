@@ -1,6 +1,6 @@
 {
-	"appId": "io.ionic.starter",
-	"appName": "SearchTess",
+	"appId": "io.ionic.searchHealth",
+	"appName": "Search Health",
 	"webDir": "build",
 	"bundledWebRuntime": false
 }
