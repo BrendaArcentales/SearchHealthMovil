@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   IonContent,
   IonGrid,
@@ -22,13 +22,13 @@ import { medicalCenter } from "../modelo/medicalCenters";
 import user from "../firebase/services/user";
 
 const Favorites: React.FC = () => {
-  const { authValues } = React.useContext(AuthProvider);
-  const [listFavorites] = useFavorites(authValues.user.uid);
+  const auth = useContext(AuthProvider);
+  const [listFavorites] = useFavorites(auth?.authValues?.user.uid);
   const [searchText, setSearchText] = useState("");
   const [present] = useIonAlert();
 
   const handleEditFavorite = async (id: any) => {
-    await user.getFavoriteCenterByUser(authValues.user.uid, id).delete();
+    await user.getFavoriteCenterByUser(auth?.authValues?.user.uid, id).delete();
   };
 
   const handleDeleteFavorite = (id: any) => {
@@ -51,58 +51,60 @@ const Favorites: React.FC = () => {
       />
       <IonList>
         {listFavorites.length > 0 ? (
-          listFavorites.filter((val: any) => {
-            if (searchText == "") {
-              return val;
-            } else if (
+          listFavorites
+            .filter((val: any) => {
+              if (searchText == "") {
+                return val;
+              } else if (
                 val.name.toLowerCase().includes(searchText.toLowerCase())
-            ) {
-              return val;
-            }else if (
-                val.specialties.find((item: string)=>{
-                  if(item.toLowerCase().includes(searchText.toLowerCase())){
+              ) {
+                return val;
+              } else if (
+                val.specialties.find((item: string) => {
+                  if (item.toLowerCase().includes(searchText.toLowerCase())) {
                     return true;
                   }
                 })
-            ){
-              return val;
-            }
-          }).map((x: medicalCenter) => {
-            return (
-              <IonGrid key={x.id + "Center"}>
-                <IonRow>
-                  <IonCol size="10.4">
-                    <IonItem
-                      lines="full"
-                      detail={true}
-                      routerLink={`/centerDetail/${x.id}`}
-                    >
-                      <IonThumbnail slot="start">
-                        <img src={x.photo} />
-                      </IonThumbnail>
-                      <IonLabel className={"ion-text-wrap"}>
-                        <h2>{x.name} </h2>
-                        <h4 className={"ion-text-end"}>{x.sector}</h4>
-                        <p>{x.type}</p>
-                      </IonLabel>
-                    </IonItem>
-                  </IonCol>
+              ) {
+                return val;
+              }
+            })
+            .map((x: medicalCenter) => {
+              return (
+                <IonGrid key={x.id + "Center"}>
+                  <IonRow>
+                    <IonCol size="10.4">
+                      <IonItem
+                        lines="full"
+                        detail={true}
+                        routerLink={`/centerDetail/${x.id}`}
+                      >
+                        <IonThumbnail slot="start">
+                          <img src={x.photo} />
+                        </IonThumbnail>
+                        <IonLabel className={"ion-text-wrap"}>
+                          <h2>{x.name} </h2>
+                          <h4 className={"ion-text-end"}>{x.sector}</h4>
+                          <p>{x.type}</p>
+                        </IonLabel>
+                      </IonItem>
+                    </IonCol>
 
-                  <IonCol size="1.6" className="ion-align-self-center">
-                    <IonLabel>
-                      <IonIcon
-                        onClick={() => handleDeleteFavorite(x.id)}
-                        slot="start"
-                        size="large"
-                        color={"danger"}
-                        icon={trash}
-                      />
-                    </IonLabel>
-                  </IonCol>
-                </IonRow>
-              </IonGrid>
-            );
-          })
+                    <IonCol size="1.6" className="ion-align-self-center">
+                      <IonLabel>
+                        <IonIcon
+                          onClick={() => handleDeleteFavorite(x.id)}
+                          slot="start"
+                          size="large"
+                          color={"danger"}
+                          icon={trash}
+                        />
+                      </IonLabel>
+                    </IonCol>
+                  </IonRow>
+                </IonGrid>
+              );
+            })
         ) : (
           <IonGrid className={"ion-padding-top"}>
             <IonRow>

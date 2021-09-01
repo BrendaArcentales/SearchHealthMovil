@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   IonCard,
   IonCardContent,
@@ -9,21 +9,21 @@ import {
   IonGrid,
   IonIcon,
   IonLabel,
+  IonRouterLink,
   IonRow,
   useIonAlert,
 } from "@ionic/react";
 import { star, starOutline } from "ionicons/icons";
 import user from "../firebase/services/user";
 import { toast } from "../toast";
-import { Link } from "react-router-dom";
 import AuthProvider from "../services/AuthProvider";
 import useFavorites from "../hooks/useFavorites";
 
 const CardCenterMedical = (props: any) => {
   const dataCenter = props.center;
   const [favorite, setFavorite] = useState<boolean>(false);
-  const { authValues } = React.useContext(AuthProvider);
-  const [listFavorites] = useFavorites(authValues.user.uid);
+  const auth = useContext(AuthProvider);
+  const [listFavorites] = useFavorites(auth?.authValues?.user.uid);
   const [present] = useIonAlert();
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const CardCenterMedical = (props: any) => {
 
   const handleSaveFavorite = async () => {
     await user
-      .getFavoriteCenterByUser(authValues.user.uid, dataCenter.id)
+      .getFavoriteCenterByUser(auth?.authValues?.user.uid, dataCenter.id)
       .set({ ...dataCenter })
       .then(() => {
         setFavorite(true);
@@ -48,7 +48,7 @@ const CardCenterMedical = (props: any) => {
 
   const handleEditFavorite = async () => {
     await user
-      .getFavoriteCenterByUser(authValues.user.uid, dataCenter.id)
+      .getFavoriteCenterByUser(auth?.authValues?.user.uid, dataCenter.id)
       .delete()
       .then(() => {
         setFavorite(false);
@@ -82,14 +82,21 @@ const CardCenterMedical = (props: any) => {
   return (
     <>
       <IonCard>
-        <img className="img-style" src={dataCenter.photo} />
+        <img
+          className="img-style"
+          src={
+            dataCenter?.photo
+              ? dataCenter?.photo
+              : "https://firebasestorage.googleapis.com/v0/b/search-health-ce2ca.appspot.com/o/medicalCenters%2FOZ6YgiYGKwgZ7QrxtfoC--centro.jpg?alt=media&token=2a9b6ae7-2911-4872-ad32-00c5c63a3b27"
+          }
+        />
         <IonCardHeader>
           <IonGrid>
             <IonRow>
               <IonCol size={"10"}>
-                <IonCardSubtitle>{dataCenter.sector}</IonCardSubtitle>
-                <IonCardTitle>{dataCenter.name}</IonCardTitle>
-                <IonCardSubtitle>{dataCenter.type}</IonCardSubtitle>
+                <IonCardSubtitle>{dataCenter?.sector}</IonCardSubtitle>
+                <IonCardTitle>{dataCenter?.name}</IonCardTitle>
+                <IonCardSubtitle>{dataCenter?.type}</IonCardSubtitle>
               </IonCol>
               <IonCol size={"2"} className="ion-align-self-center">
                 {favorite ? (
@@ -118,13 +125,19 @@ const CardCenterMedical = (props: any) => {
         </IonCardHeader>
         <IonCardContent>
           <div className="ion-text-center">
-            <Link className="color-link" to={`/map/${dataCenter.id}`}>
+            <IonRouterLink
+              className="color-link"
+              routerLink={`/map/${dataCenter?.id}`}
+            >
               Ver mapa
-            </Link>
+            </IonRouterLink>
             <IonLabel> - </IonLabel>
-            <Link className="color-link" to={`/comments/${dataCenter.id}`}>
+            <IonRouterLink
+              className="color-link"
+              routerLink={`/comments/${dataCenter?.id}`}
+            >
               Ver comentarios
-            </Link>
+            </IonRouterLink>
           </div>
         </IonCardContent>
       </IonCard>

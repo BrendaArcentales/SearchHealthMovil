@@ -26,7 +26,7 @@ const validationSchema = object().shape({
 });
 
 const Recover: React.FC = () => {
-  const { sendPasswordResetEmail } = React.useContext(AuthProvider);
+  const auth = React.useContext(AuthProvider);
   const history = useHistory();
 
   const {
@@ -39,7 +39,7 @@ const Recover: React.FC = () => {
 
   const recover = async (data: any) => {
     try {
-      await sendPasswordResetEmail(data.email).then(() => {
+      await auth.sendPasswordResetEmail(data.email).then(() => {
         toast(
           "Se ha enviado un correo a " +
             data.email +

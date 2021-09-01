@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   IonButton,
   IonCardContent,
@@ -15,7 +15,7 @@ import "./Guide.css";
 import AuthProvider from "../services/AuthProvider";
 
 const Guide: React.FC = () => {
-  const { authValues } = React.useContext(AuthProvider);
+  const auth = useContext(AuthProvider);
 
   return (
     <IonPage>
@@ -33,7 +33,7 @@ const Guide: React.FC = () => {
                     </p>
                   </IonLabel>
                 </IonCardContent>
-                {!authValues.authenticated ? (
+                {!auth?.authValues?.authenticated ? (
                   <IonButton
                     routerLink="/login"
                     color="secondary"

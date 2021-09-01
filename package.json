@@ -1,5 +1,5 @@
 {
-  "name": "Search Health Quito",
+  "name": "SearchHealth",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
@@ -19,6 +19,7 @@
     "@ionic/pwa-elements": "^3.0.2",
     "@ionic/react": "^5.5.0",
     "@ionic/react-router": "^5.5.0",
+    "@ionic/react-test-utils": "^0.2.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.6.3",
@@ -61,7 +62,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --transformIgnorePatterns \\\"node_modules/(?!(@ionic|ionicons))/\\\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -85,6 +86,7 @@
   "devDependencies": {
     "@capacitor/cli": "3.0.1",
     "@ionic/lab": "3.2.10",
+    "@testing-library/react-hooks": "^7.0.1",
     "@types/firebase": "^3.2.1"
   },
   "description": "An Ionic project"

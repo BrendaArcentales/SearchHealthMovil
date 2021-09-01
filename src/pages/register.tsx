@@ -11,8 +11,9 @@ import {
   IonCardContent,
   IonItem,
   IonLabel,
+  IonRouterLink,
 } from "@ionic/react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { toast } from "../toast";
 import AuthProvider from "../services/AuthProvider";
 import { object, string, ref } from "yup";
@@ -35,7 +36,7 @@ const validationSchema = object().shape({
 });
 
 const Register: React.FC = () => {
-  const { registerUser } = React.useContext(AuthProvider);
+  const auth = React.useContext(AuthProvider);
 
   const history = useHistory();
 
@@ -49,7 +50,7 @@ const Register: React.FC = () => {
 
   const onRegister = async (data: any) => {
     try {
-      await registerUser(data.email, data.password, data.name).then(() => {
+      await auth.registerUser(data.email, data.password, data.name).then(() => {
         toast("Su cuenta ha sido creada con exito", "success");
         history.replace("/");
       });
@@ -127,9 +128,9 @@ const Register: React.FC = () => {
               <div className="ion-padding ion-text-center">
                 <IonTitle size="small">
                   Ya tienes una cuenta?{" "}
-                  <Link className="link" to="/login">
+                  <IonRouterLink className="link" routerLink="/login">
                     Iniciar Sesión
-                  </Link>
+                  </IonRouterLink>
                 </IonTitle>
               </div>
             </IonCardContent>

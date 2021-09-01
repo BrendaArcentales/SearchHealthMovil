@@ -9,11 +9,11 @@ import {
   IonCardContent,
   IonItem,
   IonLabel,
+  IonRouterLink,
 } from "@ionic/react";
 import "./Login.css";
-import { Link } from "react-router-dom";
 import { toast } from "../toast";
-import React from "react";
+import React, { useContext } from "react";
 import AuthProvider from "../services/AuthProvider";
 import { useHistory } from "react-router";
 import translateMessage from "../firebase/translateMessage";
@@ -31,7 +31,7 @@ const validationSchema = object().shape({
 });
 
 const Login: React.FC = () => {
-  const { login } = React.useContext(AuthProvider);
+  const auth = useContext(AuthProvider);
   const history = useHistory();
   const {
     register,
@@ -43,7 +43,7 @@ const Login: React.FC = () => {
 
   const handleLogin = async (data: any) => {
     try {
-      await login(data.email, data.password).then(() => {
+      await auth.login(data.email, data.password).then(() => {
         toast("Inicio de sesión exitoso", "success");
         history.replace("/");
       });
@@ -65,22 +65,32 @@ const Login: React.FC = () => {
               <form onSubmit={handleSubmit(handleLogin)}>
                 <IonItem>
                   <IonLabel position="floating">Email</IonLabel>
-                  <IonInput {...register("email")} type="text" clearInput />
+                  <IonInput
+                    id={"email"}
+                    title={"email"}
+                    {...register("email")}
+                    type="text"
+                    clearInput
+                  />
                 </IonItem>
                 <div className={"ion-text-center"}>
-                  <IonLabel color={"danger"}>{errors.email?.message}</IonLabel>
+                  <IonLabel title="error-email" color={"danger"}>
+                    {errors.email?.message}
+                  </IonLabel>
                 </div>
 
                 <IonItem>
                   <IonLabel position="floating">Contraseña</IonLabel>
                   <IonInput
+                    id={"password"}
+                    title={"password"}
                     {...register("password")}
                     type="password"
                     clearInput
                   />
                 </IonItem>
                 <div className={"ion-text-center"}>
-                  <IonLabel color={"danger"}>
+                  <IonLabel title="error-password" color={"danger"}>
                     {errors.password?.message}
                   </IonLabel>
                 </div>
@@ -100,14 +110,14 @@ const Login: React.FC = () => {
               <div className="ion-text-center ">
                 <IonTitle size="small">
                   Aún no tienes cuenta?
-                  <Link className="link" to="/register">
-                    Crear cuenta
-                  </Link>
+                  <IonRouterLink className="link" routerLink="/register">
+                    <IonLabel>Crear cuenta</IonLabel>
+                  </IonRouterLink>
                 </IonTitle>
                 <IonTitle size="small" color="secondary">
-                  <Link className="link" to="/recover">
+                  <IonRouterLink className="link" routerLink="/recover">
                     Olvidaste tu contraseña
-                  </Link>
+                  </IonRouterLink>
                 </IonTitle>
               </div>
             </IonCardContent>

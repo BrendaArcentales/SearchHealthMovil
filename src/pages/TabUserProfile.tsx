@@ -14,14 +14,14 @@ import {
 import { pencilOutline } from "ionicons/icons";
 
 import "./TabUserProfile.css";
-import React from "react";
+import React, { useContext } from "react";
 import Header from "../components/Header";
 import AuthProvider from "../services/AuthProvider";
 import { useHistory } from "react-router-dom";
 
 const TabUserProfile: React.FC = () => {
-  const { authValues } = React.useContext(AuthProvider);
-  const dataUser = authValues.user;
+  const auth = useContext(AuthProvider);
+  const dataUser = auth?.authValues?.user;
   const history = useHistory();
 
   const handleOpenModal = () => {

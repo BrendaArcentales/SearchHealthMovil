@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   IonHeader,
   IonTitle,
@@ -16,11 +16,11 @@ type HeaderProps = {
 };
 
 const Header: React.FC<HeaderProps> = ({ pageName }: HeaderProps) => {
-  const { logout } = React.useContext(AuthProvider);
+  const auth = useContext(AuthProvider);
   const history = useHistory();
 
   const handleSignoutClick = () => {
-    logout().then(() => {
+    auth.logout().then(() => {
       history.replace("/login");
     });
   };
