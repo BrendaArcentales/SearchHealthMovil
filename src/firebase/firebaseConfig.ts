@@ -4,13 +4,13 @@ import "firebase/auth";
 import "firebase/storage";
 
 const config = {
-  apiKey: "AIzaSyDocGK8IMu7lwiOfSDzUUyXjb38-tXA0Bg",
-  authDomain: "search-health-ce2ca.firebaseapp.com",
-  databaseURL: "https://search-health-ce2ca-default-rtdb.firebaseio.com",
-  projectId: "search-health-ce2ca",
-  storageBucket: "search-health-ce2ca.appspot.com",
-  messagingSenderId: "29329690868",
-  appId: "1:29329690868:web:96892ea2165b3ac3e6cea1",
+  apiKey: "Your-key",
+  authDomain: "Your-key",
+  databaseURL: "Your-key",
+  projectId: "Your-key",
+  storageBucket: "Your-key",
+  messagingSenderId: "Your-key",
+  appId: "Your-key",
 };
 firebase.initializeApp(config);
 
