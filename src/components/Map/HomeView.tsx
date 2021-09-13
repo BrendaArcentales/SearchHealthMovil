@@ -27,7 +27,7 @@ const HomeView = (props: any) => {
           <div className="GeoMap">
             <GoogleMapReact
               bootstrapURLKeys={{
-                key: "AIzaSyCZ8D229FIzsavD2d6jTjSMkqZqjNO2vbY",
+                key: "Your-key",
               }}
               defaultCenter={center}
               defaultZoom={22}
