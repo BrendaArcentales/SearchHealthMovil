@@ -6,9 +6,18 @@ El proyecto Search Health es una aplicación que permite a los usuarios buscar c
 
 **Video demostrativo:**
 
-Sistema web: https://youtu.be/lFrR-o_CwD0
+Video explicativo de la realización del proyecto:
+https://youtu.be/B_7Jyj7HssM
 
-Aplicación móvil:https://youtu.be/llziqifWJJg
+Sistema Web: https://youtu.be/lFrR-o_CwD0
+Aplicaicón Móvil: https://youtu.be/llziqifWJJg
+
+**Repositorios:**
+
+Sistema Web: https://github.com/CarlosMaldonado1998/SearchHealthWeb
+Aplicacion Móvil: https://github.com/BrendaArcentales/SearchHealthMovil
+Link del despliegue de la aplicación: 
+https://play.google.com/store/apps/details?id=io.ionic.searchHealth
 
 **Realizado por:**
 
