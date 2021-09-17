@@ -168,5 +168,60 @@ El sección de perfil de usuario, se encuentra la información de la cuenta como
 <img src="https://raw.githubusercontent.com/CarlosMaldonado1998/SearchHealthWeb/develop/Images/guia4.png" width="300">
 
 
+## 5. Instalación
+
+**1. Clonar el repositorio**
+
+```bash
+  git clone https://github.com/BrendaArcentales/SearchHealthMovil.git
+  cd SearchHealthMovil
+```
+**2. Instalar dependencias**
+
+```bash
+  npm install
+```
+
+**3. Configurar variables de entorno**
+
+Ubicar el siguiente subdirectorio: 
+
+src/firebase/firebaseConfig.ts 
+
+En este archivo se deben añadir las credenciales otorgadas por Firebase. 
+
+```bash
+const config = {
+ apiKey: "[YOUR_apiKey_HERE]",
+    authDomain: "[YOUR_authDomain_HERE]",
+    databaseURL: "[YOUR_databaseURL_HERE]",
+    projectId: "[YOUR_projectId_HERE]",
+    storageBucket: "[YOUR_storageBucket_HERE]",
+    messagingSenderId: "[YOUR_messagingSenderId_HERE]",
+    appId: "[YOUR_appId_HERE]",
+};
+```
+
+Adicionalmente para utilizar el servicio de Google Maps se debe proporcionar de manera similar la API key proporcionada para el servicio de Mapas de Javascript. Para lo cual en el archivo:  
+
+/src/componentes/Map/HomeView.tsx 
+
+En la linea 30 proporcionar su api key. 
+
+```bash
+...
+bootstrapURLKeys={{
+                key: "Your Key",
+              }}
+...
+```
+
+**4. Levantar el servidor local**
+
+Una vez asiganadas las variables de entorno se puede ejecutar el servidor local. En caso de no funcionar puede abrir el archivo package.json y ubicar la sección de scripts y correr el comando que permita iniciar la aplicación que dira "start: react-scripts start"
+
+```bash
+  ionic start
+```
 
 
